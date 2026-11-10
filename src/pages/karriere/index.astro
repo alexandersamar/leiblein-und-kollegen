@@ -1,0 +1,77 @@
+---
+// Karriereseite („Du“-Ansprache): Arbeitgeber, offene Stellen (Recruitee), Einstiegswege, Teamstimmen
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/page/PageHero.astro';
+import Karriere from '../../components/home/Karriere.astro';
+import Abschluss from '../../components/home/Abschluss.astro';
+import FaqBlock from '../../components/page/FaqBlock.astro';
+import Vertrauen from '../../components/home/Vertrauen.astro';
+import { team, careerContact, careerFaq } from '../../data/careers';
+import { faqJsonLd } from '../../data/faqJsonLd';
+
+const [lead, ...rest] = team;
+const others = rest.slice(0, 4);
+const perks = [
+  { title: 'Hybrid & remote', text: 'Du arbeitest im Büro in Aschaffenburg, hybrid oder remote – so, wie es zu deinem Leben passt.' },
+  { title: 'Perspektive bis zur Partnerschaft', text: 'Wer Verantwortung übernehmen will, kann bei uns wachsen – bis hin zur Partnerschaft.' },
+  { title: 'Weiterbildung', text: 'Regelmäßige Fort- und Weiterbildungen, damit dein Fachwissen mitwächst.' },
+  { title: 'Flache Hierarchien', text: 'Kurze Wege, Kommunikation auf Augenhöhe und ein respektvoller Umgang miteinander.' },
+  { title: 'Teamevents & Teamreisen', text: 'Gemeinsame Events und Reisen – unser Zusammenhalt endet nicht mit dem Feierabend.' },
+  { title: 'Digitale Kanzlei', text: 'Als DATEV Digitale Kanzlei arbeiten wir papierlos – mit modernen Werkzeugen statt Aktenbergen.' },
+];
+---
+<Base title="Karriere bei Leiblein + Kollegen | Steuerkanzlei Aschaffenburg" description="Jobs, Ausbildung und duales Studium bei Leiblein + Kollegen: digitale Steuerkanzlei in Aschaffenburg, hybrid oder remote, junges Team, Perspektive bis zur Partnerschaft." jsonLd={[faqJsonLd(careerFaq)]}>
+
+<PageHero
+  crumbs={[{ label: 'Karriere' }]}
+  eyebrow="Leiblein + Du"
+  title="Damit es bald heißt: <em>Leiblein + Du.</em>"
+  lead="Du suchst Abwechslung, nette Kollegen und die Möglichkeit, dich weiterzuentwickeln? Dann werde Teil unseres Teams – im Büro in Aschaffenburg, hybrid oder remote."
+  note="Hybrid & remote · Perspektive bis zur Partnerschaft · DATEV Digitale Kanzlei"
+  cta={{ label: 'Jetzt bewerben', href: '#stellen' }}
+  phone={false}
+  team
+  frame
+  img={{ webp: '/assets/img/karriere-frame-800.webp 800w, /assets/img/karriere-frame-1200.webp 1200w, /assets/img/karriere-frame-1600.webp 1600w', src: '/assets/img/karriere-frame-1600.jpg', alt: 'Zwei Kolleginnen im Gespräch am Fenster der Kanzlei', width: 1600, height: 1067 }}
+/>
+
+<Vertrauen band={false} />
+
+<Karriere page />
+
+<!-- Was dich erwartet: dunkle Sektion, Vorteile als Tabelle auf Linien -->
+<section class="section section--solid">
+  <div class="container split">
+    <div class="split__head reveal"><div class="d-head__top"><span class="d-eyebrow">Was dich erwartet</span><h2 class="d-title">Unser Erfolgsfaktor: <em>Du.</em></h2></div><p class="lead">Vom Berufseinstieg bis zur Fachkraft arbeiten wir Hand in Hand. Wir fordern und fördern eigenverantwortliches Arbeiten – bei uns zählt jeder im Team.</p></div>
+    <div class="kanzlei-values perks reveal">
+      {perks.map((p) => <p><b>{p.title}</b><span>{p.text}</span></p>)}
+    </div>
+  </div>
+</section>
+
+<!-- Teamstimmen: großes Zitat + Liste, hellblaue Sektion (Zitatkarte Fresh Blue) – direkt vor den Fragen -->
+<section class="section section--paper">
+  <div class="container">
+    <div class="d-head d-head--start reveal">
+      <div class="d-head__top"><span class="d-eyebrow">Unser Team</span>
+      <h2 class="d-title">Was Kolleginnen und Kollegen <em>über uns sagen.</em></h2></div>
+    </div>
+    <div class="stimmen reveal">
+      <figure class="stimme stimme--main"><span class="stimme__mark" aria-hidden="true">„</span><blockquote>{lead.quote}</blockquote><figcaption><img class="stimme__av" src={`/assets/img/real/${lead.img}-avatar-128.webp`} alt="" width="44" height="44" loading="lazy"><span><b>{lead.name}</b><span>{lead.role}</span></span></figcaption></figure>
+      <div class="stimmen__list">
+        {others.map((t) => <figure class="stimme"><blockquote>„{t.quote}“</blockquote><figcaption><img class="stimme__av" src={`/assets/img/real/${t.img}-avatar-128.webp`} alt="" width="44" height="44" loading="lazy"><span><b>{t.name}</b><span>{t.role}</span></span></figcaption></figure>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<FaqBlock items={careerFaq} title="Gut zu wissen, <em>bevor du dich bewirbst.</em>" lead="Deine Frage ist nicht dabei? Irina Leiblein beantwortet sie dir gern persönlich." mail={careerContact.email} />
+
+<Abschluss
+  eyebrow="Leiblein + Du"
+  title="Du denkst genauso frisch <em>wie wir?</em>"
+  text="Dann schick uns eine E-Mail oder ruf kurz an, damit wir uns kennenlernen. Bei Fragen zu Stellen, Ausbildung oder Studium hilft dir Irina Leiblein gern weiter."
+  primary={{ label: 'Jetzt bewerben', href: `mailto:${careerContact.email}` }}
+/>
+
+</Base>

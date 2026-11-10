@@ -1,0 +1,32 @@
+---
+// „Warum wir“ (Leistungs- und Branchenseiten): links Kopf + vier Gründe mit großem Begriff, rechts Porträt mit Namensschild (wie Kanzlei-Block der Startseite)
+// person: 'irina' (Standard) | 'eberhard'; role überschreibt die Zeile unter dem Namen
+interface Props { person?: 'irina' | 'eberhard'; role?: string; paper?: boolean }  // paper: hellblaue Sektion (Namensschild dann weiß)
+const { person = 'irina', role, paper = false } = Astro.props;
+const people = {
+  irina: { name: 'Irina Leiblein', role: 'Steuerberaterin · Geschäftsführerin', img: 'irina-leiblein' },
+  eberhard: { name: 'Eberhard Leiblein', role: 'Steuerberater · Geschäftsführer', img: 'eberhard-leiblein' },
+};
+const p = people[person];
+// Fakten aus Briefing/Startseite – gleich auf allen Seiten
+const why = [
+  { big: 'DATEV', title: 'Digitale Kanzlei', text: 'Ausgezeichnet für digitale Zusammenarbeit – Belege, Auswertungen und Freigaben laufen sicher über DATEV.' },
+  { big: '20', accent: '+', title: 'Jahre Erfahrung', text: 'Steuerberatung und Buchhaltung für Unternehmen, Gesellschaften und Heilberufe.' },
+  { big: '1', accent: ':', big2: '1', title: 'Feste Ansprechpartner', text: 'Sie sprechen immer mit denselben Menschen, die Ihr Unternehmen und Ihre Zahlen kennen.' },
+  { big: '100', accent: ' %', title: 'Digital & deutschlandweit', text: 'Upload, App und Videotermin – die Zusammenarbeit funktioniert, egal wo Ihr Unternehmen sitzt.' },
+];
+---
+<section class={`section${paper ? ' section--paper' : ''}`}>
+  <div class="container why-person">
+    <div class="why-person__txt reveal">
+      <div class="col-head"><div class="d-head__top"><span class="d-eyebrow">Warum wir</span><h2 class="d-title">Persönlich betreut, <em>digital organisiert.</em></h2></div></div>
+      <ul class="why-person__list">{why.map((w) => <li><div class="why-person__head"><b>{w.big}{w.accent && <i>{w.accent}</i>}{w.big2}</b><h3>{w.title}</h3></div><p>{w.text}</p></li>)}</ul>
+    </div>
+    <div class="founders-d founders-d--one reveal">
+      <article class="founder-d">
+        <div class="ph ph--light"><img src={`/assets/img/real/${p.img}-800.webp`} srcset={`/assets/img/real/${p.img}-400.webp 400w, /assets/img/real/${p.img}-800.webp 800w`} sizes="(min-width: 1024px) 460px, 100vw" width="800" height="800" alt={p.name} loading="lazy"></div>
+        <p class="founder-d__name"><b>{p.name}</b><span>{role ?? p.role}</span></p>
+      </article>
+    </div>
+  </div>
+</section>

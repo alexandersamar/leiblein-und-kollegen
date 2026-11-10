@@ -1,0 +1,66 @@
+---
+// Vorlage für jede Leistungsseite (Briefing: Hero → Nutzen → Was wir tun → Warum wir → FAQ → CTA; ohne „Weitere Leistungen“, damit nichts vom Erstgespräch ablenkt)
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/page/PageHero.astro';
+import FaqBlock from '../../components/page/FaqBlock.astro';
+import Ablauf from '../../components/home/Ablauf.astro';
+import Abschluss from '../../components/home/Abschluss.astro';
+import Vertrauen from '../../components/home/Vertrauen.astro';
+import WarumWir from '../../components/page/WarumWir.astro';
+import { services, url } from '../../data/site';
+import { servicePages, type Service } from '../../data/services';
+import { faqJsonLd } from '../../data/faqJsonLd';
+
+export function getStaticPaths() {
+  return servicePages.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props as { s: Service };
+const label = services[s.key as keyof typeof services].label;
+// Gesicht im Block „Warum wir“: Gründung und Nachfolge = Eberhard Leiblein (Schwerpunkt laut Briefing), sonst Irina Leiblein
+const whyRole = s.key === 'gruendung' ? 'Steuerberater · KfW-Gründungscoach' : s.key === 'nachfolge' ? 'Steuerberater · Unternehmensnachfolge' : undefined;
+---
+<Base title={s.seo.title} description={s.seo.description} jsonLd={[faqJsonLd(s.faq)]}>
+
+<PageHero
+  crumbs={[{ label: 'Leistungen', href: url.leistungen }, { label }]}
+  eyebrow={s.pillar}
+  title={s.title}
+  lead={s.lead}
+  note="Für Unternehmen ab 100.000 € Jahresumsatz, die digital zusammenarbeiten möchten"
+  team
+  img={s.img}
+  frame
+/>
+
+<Vertrauen band={false} />
+
+<!-- Einstieg + Vorteile -->
+<section class="section">
+  <div class="container svc-intro">
+    <div class="split">
+      <div class="split__head reveal"><div class="d-head__top"><span class="d-eyebrow">Überblick</span><h2 class="d-title" set:html={s.intro.title} /></div></div>
+      <div class="split__body reveal">{s.intro.text.map((t) => <p class="lead">{t}</p>)}</div>
+    </div>
+    <ol class="aud aud--4 reveal">
+      {s.benefits.map((b, i) => <li class="aud__item"><span class="aud__num">{String(i + 1).padStart(2, '0')}</span><h3>{b.title}</h3><p>{b.text}</p></li>)}
+    </ol>
+  </div>
+</section>
+
+<!-- Leistungsumfang: dunkle Sektion, Einträge auf Linien -->
+<section class="section section--solid">
+  <div class="container split">
+    <div class="split__head reveal"><div class="d-head__top"><span class="d-eyebrow">Leistungsumfang</span><h2 class="d-title">Was wir <em>für Sie übernehmen.</em></h2></div><a class="btn btn--primary" href={url.anfrage}>Erstgespräch anfragen <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a></div>
+    <ul class="scope reveal">{s.scope.map((x) => <li>{x}</li>)}</ul>
+  </div>
+</section>
+
+<WarumWir person={s.person} role={whyRole} />
+
+<Ablauf />
+
+<FaqBlock items={s.faq} />
+
+<Abschluss />
+
+</Base>

@@ -1,0 +1,8 @@
+---
+// Brotkrumen-Leiste wie bei Ahlhoff: eigene Zeile direkt unter dem Header (20px unter seiner Linie),
+// unabhängig vom Seitenkopf darunter. Muss direktes Kind der ersten Sektion sein (Sektion bekommt .has-crumbs).
+import Crumbs from './Crumbs.astro';
+interface Props { items: { label: string; href?: string }[] }
+const { items } = Astro.props;
+---
+<div class="crumbbar"><div class="container"><Crumbs items={items} /></div></div>

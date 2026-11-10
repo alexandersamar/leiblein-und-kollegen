@@ -1,0 +1,80 @@
+---
+// Einstiegswege: Ausbildung und Duales Studium (eine Vorlage, Inhalte in data/careers.ts)
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/page/PageHero.astro';
+import Abschluss from '../../components/home/Abschluss.astro';
+import FaqBlock from '../../components/page/FaqBlock.astro';
+import Vertrauen from '../../components/home/Vertrauen.astro';
+import { faqJsonLd } from '../../data/faqJsonLd';
+import { tracks, team, careerContact, type Track } from '../../data/careers';
+import { url } from '../../data/site';
+
+export function getStaticPaths() {
+  return tracks.map((t) => ({ params: { slug: t.slug }, props: { t } }));
+}
+const { t } = Astro.props as { t: Track };
+const others = team.filter((m) => m.img !== t.quote.img).slice(0, 4);
+---
+<Base title={t.seo.title} description={t.seo.description} jsonLd={[faqJsonLd(t.faq)]}>
+
+<PageHero
+  crumbs={[{ label: 'Karriere', href: url.karriere }, { label: t.label }]}
+  eyebrow={t.eyebrow}
+  title={t.title}
+  lead={t.lead}
+  cta={{ label: 'Jetzt bewerben', href: `mailto:${careerContact.email}?subject=${encodeURIComponent('Bewerbung: ' + t.label)}` }}
+  phone={false}
+  team
+  frame
+  img={t.img}
+/>
+
+<Vertrauen band={false} />
+
+<!-- Einstieg + Eckpunkte -->
+<section class="section">
+  <div class="container svc-intro">
+    <div class="split">
+      <div class="split__head reveal"><div class="d-head__top"><span class="d-eyebrow">{t.label}</span><h2 class="d-title">{t.label} bei <em>Leiblein + Kollegen.</em></h2></div></div>
+      <div class="split__body reveal">{t.intro.map((p) => <p class="lead">{p}</p>)}</div>
+    </div>
+    <ol class="aud aud--3 reveal">
+      {t.facts.map((f, i) => <li class="aud__item"><span class="aud__num">{String(i + 1).padStart(2, '0')}</span><h3>{f.title}</h3><p>{f.text}</p></li>)}
+    </ol>
+  </div>
+</section>
+
+<!-- Das lernst du: dunkle Sektion -->
+<section class="section section--solid">
+  <div class="container split">
+    <div class="split__head reveal"><div class="d-head__top"><span class="d-eyebrow">Das lernst du</span><h2 class="d-title">Echte Aufgaben <em>ab Tag 1.</em></h2></div></div>
+    <ul class="scope reveal">{t.learn.map((l) => <li>{l}</li>)}</ul>
+  </div>
+</section>
+
+<!-- Teamstimmen: großes Zitat + Liste (wie Mandantenstimmen der Startseite), hellblaue Sektion → Zitatkarte weiß -->
+<section class="section section--paper">
+  <div class="container">
+    <div class="d-head d-head--start reveal">
+      <div class="d-head__top"><span class="d-eyebrow">Aus dem Team</span>
+      <h2 class="d-title">Wie es sich <em>bei uns anfühlt.</em></h2></div>
+    </div>
+    <div class="stimmen reveal">
+      <figure class="stimme stimme--main"><span class="stimme__mark" aria-hidden="true">„</span><blockquote>{t.quote.text}</blockquote><figcaption><img class="stimme__av" src={`/assets/img/real/${t.quote.img}-avatar-128.webp`} alt="" width="44" height="44" loading="lazy"><span><b>{t.quote.name}</b><span>{t.quote.role}</span></span></figcaption></figure>
+      <div class="stimmen__list">
+        {others.map((m) => <figure class="stimme"><blockquote>„{m.quote}“</blockquote><figcaption><img class="stimme__av" src={`/assets/img/real/${m.img}-avatar-128.webp`} alt="" width="44" height="44" loading="lazy"><span><b>{m.name}</b><span>{m.role}</span></span></figcaption></figure>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<FaqBlock items={t.faq} title="Gut zu wissen, <em>bevor du dich bewirbst.</em>" lead="Deine Frage ist nicht dabei? Irina Leiblein beantwortet sie dir gern persönlich." mail={careerContact.email} />
+
+<Abschluss
+  eyebrow="Wir sind für dich da"
+  title="Bereit für deinen Start <em>bei Leiblein + Kollegen?</em>"
+  text={`Schick uns deine Bewerbung per E-Mail. Fragen beantwortet dir ${careerContact.name} gern – per E-Mail oder Telefon.`}
+  primary={{ label: 'Jetzt bewerben', href: `mailto:${careerContact.email}?subject=${encodeURIComponent('Bewerbung: ' + t.label)}` }}
+/>
+
+</Base>

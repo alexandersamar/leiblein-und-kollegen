@@ -1,0 +1,121 @@
+---
+// Kanzlei & Team (Briefing #14): Geschichte und Werte, Gründerprofile mit Werdegang und Qualifikationen,
+// Teamraster mit Porträts und Zitaten, Partner/Mitgliedschaften, Standort. Aufbau in der Bildsprache der Leistungsseiten.
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/page/PageHero.astro';
+import Vertrauen from '../components/home/Vertrauen.astro';
+import Abschluss from '../components/home/Abschluss.astro';
+import { history, founders, members, partners } from '../data/kanzlei';
+import { firm, url } from '../data/site';
+---
+<Base title="Kanzlei & Team | Leiblein + Kollegen, Steuerberater in Aschaffenburg" description="Lernen Sie Leiblein + Kollegen kennen: Eberhard und Irina Leiblein und rund 20 Fachkräfte – digitale Steuer- und Unternehmensberatung aus Aschaffenburg für Unternehmen in ganz Deutschland.">
+
+<PageHero
+  crumbs={[{ label: 'Kanzlei & Team' }]}
+  eyebrow="Kanzlei & Team"
+  title="Leiblein + Kollegen = <em>eine Rechnung, die aufgeht.</em>"
+  lead="Wir sind eine digitale Steuer- und Unternehmensberatung aus Aschaffenburg. Persönlich geführt von Eberhard und Irina Leiblein – mit einem Team, das Ihre Zahlen kennt und in klarer Sprache erklärt."
+  note="Seit 2017 · DATEV Digitale Kanzlei · Mitglied der Steuerberaterkammer Nürnberg"
+  team
+  frame
+  img={{ webp: '/assets/img/kanzlei-frame-800.webp 800w, /assets/img/kanzlei-frame-1200.webp 1200w, /assets/img/kanzlei-frame-1600.webp 1600w', src: '/assets/img/kanzlei-frame-1600.jpg', alt: 'Das Team von Leiblein + Kollegen beim gemeinsamen Ausflug', width: 1600, height: 1067 }}
+/>
+
+<Vertrauen band={false} />
+
+<!-- Geschichte + Werte: Kopf links, Meilensteine rechts auf Linien -->
+<section class="section">
+  <div class="container aud-wrap">
+    <div class="col-head reveal">
+      <div class="d-head__top"><span class="d-eyebrow">Unsere Geschichte</span>
+      <h2 class="d-title">Weitsicht, Klartext <br class="br-desk"><em>und eine Hand.</em></h2></div>
+      <p class="lead">Steuerberatung und Betriebswirtschaft gehören für uns zusammen. Deshalb blicken wir nach vorn statt nur zurück, erklären Zahlen ohne Fachchinesisch – und betreuen Steuern und Beratung aus einer Hand.</p>
+    </div>
+    <ol class="aud reveal">
+      {history.map((h) => <li class="aud__item"><span class="aud__num">{h.year}</span><h3>{h.title}</h3><p>{h.text}</p></li>)}
+    </ol>
+  </div>
+</section>
+
+<!-- Gründerprofile: dunkle Sektion wie „Expertin“ auf Gesundheitswesen, zweites Profil gespiegelt -->
+<section class="section section--solid">
+  <div class="container founders-p">
+    {founders.map((f, i) => (
+      <div class={`kanzlei${i % 2 ? ' kanzlei--flip' : ''}`}>
+        <div class="reveal">
+          <div class="col-head"><div class="d-head__top"><span class="d-eyebrow">{f.eyebrow}</span>
+          <h2 class="d-title" set:html={f.title} /></div>
+          <p class="lead">{f.lead}</p>
+          <div class="kanzlei-values"><span class="kanzlei-values__h">Werdegang</span>
+            <div class="kanzlei-values__rows">{f.cv.map((c) => <p><b>{c.k}</b><span>{c.v}</span></p>)}</div>
+          </div>
+          <div class="kanzlei-values"><span class="kanzlei-values__h">Qualifikationen</span>
+            <div class="kanzlei-values__rows">{f.quals.map((c) => <p><b>{c.k}</b><span>{c.v}</span></p>)}</div>
+          </div></div>
+        </div>
+        <div class="founders-d founders-d--one reveal">
+          <article class="founder-d">
+            <div class="ph ph--light"><img src={`/assets/img/real/${f.img}-800.webp`} srcset={`/assets/img/real/${f.img}-400.webp 400w, /assets/img/real/${f.img}-800.webp 800w`} sizes="(min-width: 1024px) 460px, 100vw" width="800" height="800" alt={`Porträt von ${f.name}, ${f.eyebrow.replace(' · ', ' und ')} von Leiblein + Kollegen`} loading="lazy"></div>
+            <p class="founder-d__name"><b>{f.name}</b><span>{f.role}</span></p>
+          </article>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- Team: einheitliches Porträtraster mit Zitaten -->
+<section class="section">
+  <div class="container">
+    <div class="d-head reveal">
+      <div class="d-head__top"><span class="d-eyebrow">Unser Team</span>
+      <h2 class="d-title">Die Menschen <em>hinter Ihren Zahlen.</em></h2></div>
+      <p>Rund 20 Menschen – vom Steuerberater bis zum Azubi. Und ein Maskottchen, <br class="br-desk">ohne das bei uns nichts läuft.</p>
+    </div>
+    <ul class="tgrid reveal">
+      {members.map((m) => (
+        <li class="tm">
+          <div class="tm__ph"><img src={`/assets/img/real/${m.img}-400.webp`} srcset={`/assets/img/real/${m.img}-400.webp 400w, /assets/img/real/${m.img}-800.webp 800w`} sizes="(min-width: 1024px) 300px, 50vw" alt={m.role === 'Kanzleimaskottchen' ? 'Kanzleimaskottchen Hugo Moorhuhn, ein Plüsch-Moorhuhn' : `Porträt von ${m.name}, ${m.role.replace(' · ', ', ')}`} width="800" height="800" loading="lazy"></div>
+          <div class="tm__txt"><p class="tm__name"><b>{m.name}</b><span>{m.role}</span></p>
+          <blockquote>„{m.quote}“</blockquote></div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<!-- Partner und Mitgliedschaften: Kopf links, Tabelle auf Linien -->
+<section class="section section--paper">
+  <div class="container split">
+    <div class="split__head reveal">
+      <div class="d-head__top"><span class="d-eyebrow">Partner &amp; Mitgliedschaften</span>
+      <h2 class="d-title">Auf gute <em>Partnerschaft.</em></h2></div>
+      <p class="lead">Wir sind in den Kammern und Verbänden unseres Berufsstands organisiert und arbeiten mit starken Partnern – für Sicherheit und Qualität in jeder Beratung.</p>
+    </div>
+    <dl class="ctab reveal">
+      {partners.map((p) => <div><dt>{p.k}</dt><dd><span>{p.v}</span></dd></div>)}
+    </dl>
+  </div>
+</section>
+
+<!-- Standort -->
+<section class="section">
+  <div class="container split">
+    <div class="split__head reveal">
+      <div class="d-head__top"><span class="d-eyebrow">Standort</span>
+      <h2 class="d-title">In Aschaffenburg zu Hause, <em>in ganz Deutschland für Sie da.</em></h2></div>
+      <p class="lead">Unsere Kanzlei liegt in der Innenstadt, nahe dem Hauptbahnhof. Die meisten Mandanten arbeiten mit uns komplett digital – Termine sind per Video oder bei uns vor Ort möglich.</p>
+      <a class="btn btn--line" href={url.kontakt}>Kontakt &amp; Anfahrt <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a>
+    </div>
+    <dl class="ctab reveal">
+      <div><dt>Adresse</dt><dd><span><b>{firm.name}</b><br>{firm.street}, {firm.zip} {firm.city}</span></dd></div>
+      <div><dt>Parken</dt><dd><span>Mandanten-Parkplätze im Hof, Einfahrt über die Elisenstraße 29</span></dd></div>
+      <div><dt>Telefon</dt><dd><a class="ctab__big" href={firm.phoneHref}>{firm.phone}</a></dd></div>
+      <div><dt>Digital</dt><dd><span>Belege, Auswertungen und Termine laufen über DATEV und Video – deutschlandweit.</span></dd></div>
+    </dl>
+  </div>
+</section>
+
+<Abschluss />
+
+</Base>

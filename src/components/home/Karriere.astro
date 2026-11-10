@@ -1,0 +1,32 @@
+---
+// Karriere-Teaser (Startseite) und Stellenblock (Karriereseite: page = true → ohne Button zur Karriereseite)
+const { page = false } = Astro.props;
+---
+<!-- ====================== 10 · Karriere (Du) ====================== -->
+<section class={`section${page ? '' : ' section--paper'}`} id={page ? "stellen" : "karriere"}><!-- Karriereseite: weiße Sektion, Stellen-Karten weiß mit Linie -->
+  <div class="container">
+    <!-- Karriereseite: normaler Abschnitt wie alle anderen (.split: Kopf links, Stellen rechts); Startseite: Karte .career-d -->
+    <div class={page ? 'split' : 'career-d reveal'}>
+      <div class={page ? 'split__head reveal' : undefined}>
+        {page ? (
+          <Fragment><div class="d-head__top"><span class="d-eyebrow">Offene Stellen</span>
+          <h2 class="d-title">Wo du <br class="br-desk"><em>einsteigen kannst.</em></h2></div>
+          <p class="lead">Unsere aktuellen Stellen findest du hier – die Bewerbung läuft unkompliziert online. Wir sind immer auf der Suche nach Kolleginnen und Kollegen, die unsere Kanzlei mit ihrem Know-how bereichern.</p></Fragment>
+        ) : (<Fragment>
+        <div class="col-head"><div class="d-head__top"><span class="d-eyebrow">Leiblein + Du</span>
+        <h2 class="d-title">Steuern mit Perspektive. <br><em>Im Büro, hybrid oder remote.</em></h2></div>
+        <p class="career-d__intro">Du suchst eine Kanzlei, die digital denkt? Bei uns arbeitest du so, wie es zu deinem Leben passt – in einem jungen Team mit flachen Hierarchien, echter Weiterbildung und einer Perspektive, die bis zur Partnerschaft reicht.</p></div>
+        <ul class="career-d__perks">
+          <li>Hybrid &amp; remote</li><li>Junges Team</li><li>Flache Hierarchien</li><li>Regelmäßige Fortbildungen</li><li>Teamevents &amp; Teamreisen</li><li>Übernahme nach der Ausbildung</li>
+        </ul>
+        </Fragment>)}
+        {!page && <a class="btn btn--primary" href="/karriere/">Mehr über deine Karriere bei uns <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a>}
+      </div>
+      <div class={page ? 'jobs reveal' : 'jobs'}>
+        <div class="jobs__group"><div class="jobs__head"><h3>Hier passt du rein</h3>{!page && <a class="link-arrow" href="/karriere/"><span>Alle Stellen</span> <svg class="icon"><use href="#i-arrow"/></svg></a>}</div><div class="jobs__list"><a class="job" href="https://leibleinundkollegen.recruitee.com/o/steuerberater-mwd-perspektive-auf-partnerschaft-flexibles-arbeiten-in-digitalisierter-kanzlei-2" target="_blank" rel="noopener"><b>Steuerberater (m/w/d)</b><small><span>Perspektive Partnerschaft</span><span>Hybrid / Remote</span><span>ab sofort</span></small><span class="arrow-dot"><svg class="icon"><use href="#i-arrow"/></svg></span></a><a class="job" href="https://leibleinundkollegen.recruitee.com/o/steuerfachangestellter-mwd-2-3" target="_blank" rel="noopener"><b>Steuerfachangestellte/r (m/w/d)</b><small><span>Hybrid / Remote</span><span>Aschaffenburg</span><span>ab sofort</span></small><span class="arrow-dot"><svg class="icon"><use href="#i-arrow"/></svg></span></a></div></div>
+        <div class="jobs__group"><p class="jobs__sub">Dein Einstieg nach der Schule</p><div class="jobs__list"><a class="job" href="/karriere/ausbildung/"><b>Ausbildung zur/zum Steuerfachangestellten</b><small><span>Deine eigenen Aufgaben ab Tag 1</span><span>Gute Übernahmechancen</span></small><span class="arrow-dot"><svg class="icon"><use href="#i-arrow"/></svg></span></a><a class="job" href="/karriere/duales-studium/"><b>Duales Studium mit der DHBW</b><small><span>Theorie + Praxis</span><span>Partnerunternehmen</span></small><span class="arrow-dot"><svg class="icon"><use href="#i-arrow"/></svg></span></a></div></div>
+        <p class="career-d__contact">Fragen zu deiner Bewerbung? Schreib <b>Irina Leiblein</b> · <a href="mailto:i.leiblein@leiblein-und-kollegen.de">i.leiblein@leiblein-und-kollegen.de</a></p>
+      </div>
+    </div>
+  </div>
+</section>

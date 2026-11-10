@@ -1,0 +1,55 @@
+---
+import { firm, url, socials, footerLeistungen, footerKanzlei, footerLegal } from '../data/site';
+const year = new Date().getFullYear();
+---
+<!-- ====================== Footer ====================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__brand">
+      <a class="footer__logo" href={url.home}><img src="/assets/logo/logo-neg_freshblue.svg" alt="Leiblein + Kollegen" width="300" height="54"></a>
+      <p class="footer__claim">Steuerberatung + Unternehmensberatung für Unternehmen in ganz Deutschland.</p>
+      <div class="datev-badge"><img src="/assets/img/real/datev-digitale-kanzlei-2026-168.png" alt="DATEV-Label Digitale Kanzlei 2026" width="48" height="45"><span><b>Digitale Kanzlei 2026</b>DATEV-Label</span></div>
+      <div class="socials">
+          {socials.map((s) => <a href={s.href} aria-label={s.label} target="_blank" rel="noopener"><svg class="soc-ico" aria-hidden="true"><use href={`#${s.icon}`}/></svg></a>)}
+        </div>
+    </div>
+    <div class="footer__top">
+      <div>
+        <h4>Leistungen</h4>
+        <ul>
+          {footerLeistungen.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h4>Kanzlei</h4>
+        <ul>
+          {footerKanzlei.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <address class="footer__contact">
+          <span class="footer__firm">Leiblein &amp; Kollegen<br>Steuerberatungsgesellschaft mbH</span>
+          <a class="footer__ci" href={firm.phoneHref}><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>{firm.phone}</a>
+          <a class="footer__ci" href={`mailto:${firm.email}`}><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>{firm.email}</a>
+          <span class="footer__ci"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span>{firm.street}<br>{firm.zip} {firm.city}</span></span>
+        </address>
+      </div>
+      <div>
+        <h4>Öffnungszeiten</h4>
+        <dl class="footer__hours">
+          <dd><span>Mo – Do</span> 8:00 – 17:00 Uhr</dd>
+          <dd><span>Fr</span> 8:00 – 14:00 Uhr</dd>
+          <dd class="footer__hours-note">und nach Vereinbarung</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__digital">Wir arbeiten deutschlandweit digital.</span>
+      <nav aria-label="Rechtliches">
+        {footerLegal.map((l) => <a href={l.href}>{l.label}</a>)}<a href="#" data-cookie-settings>Cookie-Einstellungen</a>
+      </nav>
+      <span>© {year} Leiblein &amp; Kollegen</span>
+    </div>
+  </div>
+</footer>

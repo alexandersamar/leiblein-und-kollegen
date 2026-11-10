@@ -1,0 +1,29 @@
+---
+// Danke-Seite nach erfolgreicher Anfrage (nicht in Suchmaschinen): Bestätigung + nächste Schritte, Schritt 1 erledigt
+import Base from '../../layouts/Base.astro';
+import CrumbBar from '../../components/page/CrumbBar.astro';
+import { firm } from '../../data/site';
+---
+<Base title="Vielen Dank für Ihre Anfrage | Leiblein + Kollegen" noindex>
+<section class="section section--paper pg-hero has-crumbs">
+  <CrumbBar items={[{ label: 'Erstgespräch anfragen', href: '/anfrage/' }, { label: 'Vielen Dank' }]} />
+  <div class="container split anf">
+    <div class="split__head">
+      <div class="d-head__top"><span class="d-eyebrow">Anfrage erhalten</span>
+      <h1 class="d-title">Vielen Dank – <em>wir melden uns.</em></h1></div>
+      <p class="lead">Ihre Anfrage ist bei uns angekommen. Unser Sekretariat ruft Sie zurück und vereinbart mit Ihnen einen Termin für das Erstgespräch.</p>
+      <div class="btn-row"><a class="btn btn--primary" href="/">Zur Startseite <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a><a class="btn btn--line" href="/wissen/">Fachbeiträge lesen</a></div>
+    </div>
+    <div class="qf">
+      <span class="qf__bar"><span>So geht es weiter</span></span>
+      <ol class="anf__steps anf__steps--done">
+        <li class="is-done"><b>Anfrage gesendet</b><span>Erledigt – vielen Dank für Ihr Vertrauen.</span></li>
+        <li><b>Rückruf</b><span>Unser Sekretariat meldet sich und klärt die wichtigsten Eckdaten.</span></li>
+        <li><b>Erstgespräch</b><span>Ein Partner bespricht mit Ihnen Situation und Ziele – per Video oder in Aschaffenburg.</span></li>
+        <li><b>Start</b><span>Passt es, starten Sie über das DATEV-Online-Onboarding.</span></li>
+      </ol>
+      <div class="anf__tel anf__tel--big"><span class="anf__tel-lbl">Eilt es? Rufen Sie uns an.</span><a href={firm.phoneHref}>{firm.phone}</a><span>Mo – Do 08:00 – 17:00 · Fr 08:00 – 14:00</span></div>
+    </div>
+  </div>
+</section>
+</Base>

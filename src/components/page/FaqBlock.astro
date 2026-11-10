@@ -1,0 +1,22 @@
+---
+// FAQ wie auf der Startseite, mit eigenen Fragen. Strukturierte Daten erzeugt faqJsonLd() (siehe unten).
+import { firm } from '../../data/site';
+interface Props { items: { q: string; a: string }[]; title?: string; lead?: string; light?: boolean; mail?: string }  // mail: Adresse für „E-Mail schreiben“ (Karriere: Irina Leiblein)
+const { items, title = 'Gut zu wissen, <em>bevor wir sprechen.</em>', lead = 'Ihre Frage ist nicht dabei? Wir beantworten sie gern persönlich.', light = false, mail = firm.email } = Astro.props;
+---
+<section class={`section${light ? ' section--light' : ''}`}>
+  <div class="container faq-d">
+    <div class="faq-d__side reveal">
+      <div class="col-head"><div class="d-head__top"><span class="d-eyebrow">Häufige Fragen</span>
+      <h2 class="d-title" set:html={title} /></div>
+      <p class="lead">{lead}</p></div>
+      <div class="faq-d__card">
+        <img class="faq-d__av" src="/assets/img/real/irina-leiblein-avatar-128.webp" alt="" width="64" height="64">
+        <div class="faq-d__t"><div><b>Irina Leiblein</b><span>Steuerberaterin</span></div><a class="faq-d__tel" href={firm.phoneHref}><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>{firm.phone}</a><a class="link-arrow" href={`mailto:${mail}`}><span>E-Mail schreiben</span> <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+      </div>
+    </div>
+    <div class="faq reveal">
+      {items.map((it, i) => <details open={i === 0}><summary>{it.q}</summary><div set:html={it.a} /></details>)}
+    </div>
+  </div>
+</section>

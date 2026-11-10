@@ -1,0 +1,190 @@
+---
+// Datenschutzerklärung (Entwurf auf Basis der bisherigen Erklärung, an die neue Website angepasst – Freigabe durch Kanzlei/Datenschutzbeauftragten nötig)
+import Base from '../layouts/Base.astro';
+import LegalHead from '../components/legal/LegalHead.astro';
+import LegalDoc from '../components/legal/LegalDoc.astro';
+import { firm } from '../data/site';
+
+const sections = [
+  { id: 'verantwortlicher', title: 'Verantwortlicher' },
+  { id: 'hosting', title: 'Hosting' },
+  { id: 'aufruf', title: 'Aufruf der Website' },
+  { id: 'kontakt', title: 'Kontaktaufnahme' },
+  { id: 'cookies', title: 'Cookies und Einwilligung' },
+  { id: 'schriften', title: 'Schriftarten' },
+  { id: 'karte', title: 'Karte (OpenStreetMap)' },
+  { id: 'links', title: 'Externe Links' },
+  { id: 'weitergabe', title: 'Weitergabe von Daten' },
+  { id: 'rechte', title: 'Ihre Rechte' },
+  { id: 'stand', title: 'Stand und Aktualisierung' },
+];
+const nr = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).padStart(2, '0');
+---
+<Base title="Datenschutzerklärung | Leiblein + Kollegen" description="Datenschutzerklärung der Leiblein & Kollegen Steuerberatungsgesellschaft mbH: welche Daten beim Besuch dieser Website verarbeitet werden und welche Rechte Sie haben.">
+
+<!-- ====================== Datenschutz ====================== -->
+<section class="section section--paper legal">
+  <div class="container">
+    <LegalHead title="Datenschutzerklärung" lead="Der Schutz Ihrer Daten ist für uns als Steuerberatungskanzlei selbstverständlich. Hier erfahren Sie, welche Daten beim Besuch dieser Website verarbeitet werden und welche Rechte Sie haben." />
+
+    <LegalDoc sections={sections}>
+      <section id="verantwortlicher">
+        <h2><span>{nr('verantwortlicher')}</span>Name und Kontaktdaten des Verantwortlichen</h2>
+        <p>Diese Datenschutzerklärung informiert über die Verarbeitung personenbezogener Daten auf der Kanzleiwebseite von:</p>
+        <p class="legal-address"><b>{firm.name}</b><br>{firm.street}<br>{firm.zip} {firm.city}<br>Tel.: <a href={firm.phoneHref}>{firm.phone}</a><br>E-Mail: <a href={`mailto:${firm.email}`}>{firm.email}</a></p>
+        <div class="legal-sub">
+          <h3>Kontaktdaten des Datenschutzbeauftragten</h3>
+          <p>Der Datenschutzbeauftragte der Kanzlei ist unter der vorstehenden Kanzleianschrift und unter <a href="mailto:datenschutz@leiblein-und-kollegen.de">datenschutz@leiblein-und-kollegen.de</a> erreichbar.</p>
+        </div>
+      </section>
+
+      <section id="hosting">
+        <h2><span>{nr('hosting')}</span>Hosting</h2>
+        <p>Diese Website wird bei der STRATO AG, Otto-Ostrowski-Straße 7, 10249 Berlin, gehostet. Beim Aufruf der Website verarbeitet der Hoster die unter „Aufruf der Website“ genannten Daten auf seinen Servern in Deutschland in unserem Auftrag.</p>
+        <p>Rechtsgrundlage ist Art. 6 Abs. 1 Satz 1 Buchst. f) DSGVO. Unser berechtigtes Interesse liegt in einer sicheren, schnellen und zuverlässigen Bereitstellung unserer Website.</p>
+      </section>
+
+      <section id="aufruf">
+        <h2><span>{nr('aufruf')}</span>Aufruf der Website</h2>
+        <p>Beim Aufruf dieser Website werden durch den Internet-Browser, den der Besucher verwendet, automatisch Daten an den Server dieser Website gesendet und zeitlich begrenzt in einer Protokolldatei (Logfile) gespeichert. Bis zur automatischen Löschung werden nachstehende Daten ohne weitere Eingabe des Besuchers gespeichert:</p>
+        <ul>
+          <li>IP-Adresse des Endgeräts des Besuchers,</li>
+          <li>Datum und Uhrzeit des Zugriffs durch den Besucher,</li>
+          <li>Name und URL der vom Besucher aufgerufenen Seite,</li>
+          <li>Website, von der aus der Besucher auf die Kanzleiwebsite gelangt (sog. Referrer-URL),</li>
+          <li>Browser und Betriebssystem des Endgeräts des Besuchers sowie der Name des vom Besucher verwendeten Access-Providers.</li>
+        </ul>
+        <p>Die Verarbeitung dieser personenbezogenen Daten ist gem. Art. 6 Abs. 1 Satz 1 Buchst. f) DSGVO gerechtfertigt. Die Kanzlei hat ein berechtigtes Interesse an der Datenverarbeitung zu dem Zweck,</p>
+        <ul>
+          <li>die Verbindung zur Website der Kanzlei zügig aufzubauen,</li>
+          <li>eine nutzerfreundliche Anwendung der Website zu ermöglichen,</li>
+          <li>die Sicherheit und Stabilität der Systeme zu erkennen und zu gewährleisten und</li>
+          <li>die Administration der Website zu erleichtern und zu verbessern.</li>
+        </ul>
+        <p>Die Verarbeitung erfolgt ausdrücklich nicht zu dem Zweck, Erkenntnisse über die Person des Besuchers der Website zu gewinnen.</p>
+      </section>
+
+      <section id="kontakt">
+        <h2><span>{nr('kontakt')}</span>Kontaktaufnahme</h2>
+        <p>Besucher können die Kanzlei per E-Mail, telefonisch oder über ein Online-Formular auf der Website kontaktieren. Um eine Antwort empfangen zu können, ist zumindest die Angabe einer gültigen E-Mail-Adresse oder Telefonnummer erforderlich. Alle weiteren Angaben kann die anfragende Person freiwillig machen.</p>
+        <p>Mit Absenden einer Nachricht über ein Formular willigt der Besucher in die Verarbeitung der übermittelten personenbezogenen Daten ein. Die Datenverarbeitung erfolgt ausschließlich zu dem Zweck der Abwicklung und Beantwortung der Anfrage. Dies geschieht auf Basis der freiwillig erteilten Einwilligung gem. Art. 6 Abs. 1 Satz 1 Buchst. a) DSGVO. Die übermittelten personenbezogenen Daten werden gelöscht, sobald die Anfrage erledigt ist und keine Gründe für eine weitere Aufbewahrung gegeben sind (z.&nbsp;B. anschließende Beauftragung unserer Kanzlei).</p>
+      </section>
+
+      <section id="cookies">
+        <h2><span>{nr('cookies')}</span>Cookies und Einwilligung</h2>
+        <p>Beim ersten Besuch fragen wir über einen Hinweis am unteren Bildschirmrand, welchen Kategorien Sie zustimmen: „Notwendig“, „Statistik“, „Marketing“ und „Externe Inhalte“. Ihre Auswahl wird im lokalen Speicher Ihres Browsers (Local Storage) abgelegt, damit der Hinweis nicht bei jedem Seitenaufruf erneut erscheint. Diese Speicherung ist für die Funktion der Website erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG, Art. 6 Abs. 1 Satz 1 Buchst. f) DSGVO). Sie bleibt bestehen, bis Sie Ihre Auswahl ändern oder die Daten Ihres Browsers löschen.</p>
+        <p>Dienste der Kategorien „Statistik“ und „Marketing“ werden nur eingesetzt, wenn Sie ausdrücklich eingewilligt haben (§ 25 Abs. 1 TDDDG, Art. 6 Abs. 1 Satz 1 Buchst. a) DSGVO). Derzeit setzen wir solche Dienste nicht ein. Kommen sie künftig hinzu, werden sie hier einzeln beschrieben.</p>
+        <p>Sie können Ihre Auswahl jederzeit über <a href="#" data-cookie-settings>Cookie-Einstellungen</a> ändern oder widerrufen; der Link steht auch am Ende jeder Seite.</p>
+      </section>
+
+      <section id="schriften">
+        <h2><span>{nr('schriften')}</span>Schriftarten</h2>
+        <p>Die auf dieser Website verwendeten Schriftarten werden direkt von unserem Server geladen. Es besteht dabei keine Verbindung zu Servern von Drittanbietern, z.&nbsp;B. Google Fonts.</p>
+      </section>
+
+      <section id="karte">
+        <h2><span>{nr('karte')}</span>Karte (OpenStreetMap)</h2>
+        <p>Auf der Kontaktseite können Sie eine interaktive Karte zu unserer Kanzlei anzeigen. Die Kartendaten werden vom Dienst OpenFreeMap (tiles.openfreemap.org) auf Grundlage von OpenStreetMap-Daten geladen. Bis zu Ihrer Einwilligung zeigen wir nur ein Bild der Karte von unserem eigenen Server; dabei werden keine Daten an Dritte übermittelt.</p>
+        <p>Die Karte wird erst geladen, wenn Sie dies im Cookie-Hinweis („Alle akzeptieren“ oder „Externe Inhalte“) oder direkt auf der Karte über den Schalter „Externe Inhalte erlauben“ erlaubt haben (§ 25 Abs. 1 TDDDG, Art. 6 Abs. 1 Satz 1 Buchst. a) DSGVO). Dabei wird Ihre IP-Adresse an den Anbieter übertragen, damit die Kartenkacheln an Ihren Browser ausgeliefert werden können. Eine Freigabe über den Schalter auf der Karte wird im lokalen Speicher Ihres Browsers vermerkt. Sie können Ihre Einwilligung jederzeit über die <a href="#" data-cookie-settings>Cookie-Einstellungen</a> widerrufen oder die Daten Ihres Browsers löschen.</p>
+      </section>
+
+      <section id="links">
+        <h2><span>{nr('links')}</span>Externe Links und soziale Netzwerke</h2>
+        <p>Auf unserer Website verweisen wir per Link auf unsere Profile bei Facebook, Instagram, LinkedIn und XING sowie auf Google Maps für die Anfahrt (Schaltfläche „Route planen“). Es handelt sich um einfache Links, nicht um eingebundene Plugins: Beim bloßen Besuch unserer Website werden keine Daten an diese Anbieter übermittelt. Erst wenn Sie einen solchen Link anklicken, gelangen Sie auf die Seite des jeweiligen Anbieters, für dessen Datenverarbeitung ausschließlich dieser verantwortlich ist.</p>
+      </section>
+
+      <section id="weitergabe">
+        <h2><span>{nr('weitergabe')}</span>Weitergabe von Daten</h2>
+        <p>Personenbezogene Daten werden an Dritte übermittelt, wenn</p>
+        <ul>
+          <li>nach Art. 6 Abs. 1 Satz 1 Buchst. a) DSGVO durch die betroffene Person ausdrücklich dazu eingewilligt wurde,</li>
+          <li>die Weitergabe nach Art. 6 Abs. 1 Satz 1 Buchst. f) DSGVO zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen erforderlich ist und kein Grund zur Annahme besteht, dass die betroffene Person ein überwiegendes schutzwürdiges Interesse an der Nichtweitergabe ihrer Daten hat,</li>
+          <li>für die Datenübermittlung nach Art. 6 Abs. 1 Satz 1 Buchst. c) DSGVO eine gesetzliche Verpflichtung besteht, und/oder</li>
+          <li>dies nach Art. 6 Abs. 1 Satz 1 Buchst. b) DSGVO für die Erfüllung eines Vertragsverhältnisses mit der betroffenen Person erforderlich ist.</li>
+        </ul>
+        <p>In anderen Fällen werden personenbezogene Daten nicht an Dritte weitergegeben.</p>
+      </section>
+
+      <section id="rechte">
+        <h2><span>{nr('rechte')}</span>Ihre Rechte als betroffene Person</h2>
+        <p>Soweit Ihre personenbezogenen Daten anlässlich des Besuchs unserer Website verarbeitet werden, stehen Ihnen als „betroffene Person“ im Sinne der DSGVO folgende Rechte zu:</p>
+
+        <div class="legal-sub">
+          <h3>Auskunft</h3>
+          <p>Sie können von uns Auskunft darüber verlangen, ob personenbezogene Daten von Ihnen bei uns verarbeitet werden. Kein Auskunftsrecht besteht, wenn die Erteilung der begehrten Informationen gegen die Verschwiegenheitspflicht gem. § 57 Abs. 1 StBerG verstoßen würde oder die Informationen aus sonstigen Gründen, insbesondere wegen eines überwiegenden berechtigten Interesses eines Dritten, geheim gehalten werden müssen. Hiervon abweichend kann eine Pflicht zur Erteilung der Auskunft bestehen, wenn insbesondere unter Berücksichtigung drohender Schäden Ihre Interessen gegenüber dem Geheimhaltungsinteresse überwiegen. Das Auskunftsrecht ist ferner ausgeschlossen, wenn die Daten nur deshalb gespeichert sind, weil sie aufgrund gesetzlicher oder satzungsmäßiger Aufbewahrungsfristen nicht gelöscht werden dürfen oder ausschließlich Zwecken der Datensicherung oder der Datenschutzkontrolle dienen, sofern die Auskunftserteilung einen unverhältnismäßig hohen Aufwand erfordern würde und die Verarbeitung zu anderen Zwecken durch geeignete technische und organisatorische Maßnahmen ausgeschlossen ist. Sofern in Ihrem Fall das Auskunftsrecht nicht ausgeschlossen ist und Ihre personenbezogenen Daten von uns verarbeitet werden, können Sie von uns Auskunft über folgende Informationen verlangen:</p>
+          <ul>
+            <li>Zwecke der Verarbeitung,</li>
+            <li>Kategorien der von Ihnen verarbeiteten personenbezogenen Daten,</li>
+            <li>Empfänger oder Kategorien von Empfängern, gegenüber denen Ihre personenbezogenen Daten offengelegt werden, insbesondere bei Empfängern in Drittländern,</li>
+            <li>falls möglich die geplante Dauer, für die Ihre personenbezogenen Daten gespeichert werden, oder, falls dies nicht möglich ist, die Kriterien für die Festlegung der Speicherdauer,</li>
+            <li>das Bestehen eines Rechts auf Berichtigung oder Löschung oder Einschränkung der Verarbeitung der Sie betreffenden personenbezogenen Daten oder eines Widerspruchsrechts gegen diese Verarbeitung,</li>
+            <li>das Bestehen eines Beschwerderechts bei einer Aufsichtsbehörde für den Datenschutz,</li>
+            <li>sofern die personenbezogenen Daten nicht bei Ihnen als betroffene Person erhoben worden sind, die verfügbaren Informationen über die Datenherkunft,</li>
+            <li>das Bestehen einer automatisierten Entscheidungsfindung einschließlich Profiling und aussagekräftige Informationen über die involvierte Logik sowie die Tragweite und angestrebten Auswirkungen automatisierter Entscheidungsfindungen,</li>
+            <li>im Fall der Übermittlung an Empfänger in Drittländern, sofern kein Beschluss der EU-Kommission über die Angemessenheit des Schutzniveaus nach Art. 45 Abs. 3 DSGVO vorliegt, Informationen darüber, welche geeigneten Garantien gem. Art. 46 Abs. 2 DSGVO zum Schutze der personenbezogenen Daten vorgesehen sind.</li>
+          </ul>
+        </div>
+
+        <div class="legal-sub">
+          <h3>Berichtigung und Vervollständigung</h3>
+          <p>Sofern Sie feststellen, dass uns unrichtige personenbezogene Daten von Ihnen vorliegen, können Sie von uns die unverzügliche Berichtigung dieser unrichtigen Daten verlangen. Bei unvollständigen Sie betreffenden personenbezogenen Daten können Sie die Vervollständigung verlangen.</p>
+        </div>
+
+        <div class="legal-sub">
+          <h3>Löschung</h3>
+          <p>Sie haben ein Recht auf Löschung („Recht auf Vergessenwerden“), sofern die Verarbeitung nicht zur Ausübung des Rechts auf freie Meinungsäußerung, des Rechts auf Information oder zur Erfüllung einer rechtlichen Verpflichtung oder zur Wahrnehmung einer Aufgabe, die im öffentlichen Interesse liegt, erforderlich ist und einer der nachstehenden Gründe zutrifft:</p>
+          <ul>
+            <li>Die personenbezogenen Daten sind für die Zwecke, für die sie verarbeitet wurden, nicht mehr notwendig.</li>
+            <li>Die Rechtfertigungsgrundlage für die Verarbeitung war ausschließlich Ihre Einwilligung, welche Sie widerrufen haben.</li>
+            <li>Sie haben Widerspruch gegen die Verarbeitung Ihrer personenbezogenen Daten eingelegt, die wir öffentlich gemacht haben.</li>
+            <li>Sie haben Widerspruch gegen die Verarbeitung von uns nicht öffentlich gemachter personenbezogener Daten eingelegt und es liegen keine vorrangigen berechtigten Gründe für die Verarbeitung vor.</li>
+            <li>Ihre personenbezogenen Daten wurden unrechtmäßig verarbeitet.</li>
+            <li>Die Löschung der personenbezogenen Daten ist zur Erfüllung einer gesetzlichen Verpflichtung, der wir unterliegen, erforderlich.</li>
+          </ul>
+          <p>Kein Anspruch auf Löschung besteht, wenn die Löschung im Falle rechtmäßiger nicht automatisierter Datenverarbeitung wegen der besonderen Art der Speicherung nicht oder nur mit unverhältnismäßig hohem Aufwand möglich und Ihr Interesse an der Löschung gering ist. In diesem Fall tritt an die Stelle einer Löschung die Einschränkung der Verarbeitung.</p>
+        </div>
+
+        <div class="legal-sub">
+          <h3>Einschränkung der Verarbeitung</h3>
+          <p>Sie können von uns die Einschränkung der Verarbeitung verlangen, wenn einer der nachstehenden Gründe zutrifft:</p>
+          <ul>
+            <li>Sie bestreiten die Richtigkeit der personenbezogenen Daten. Die Einschränkung kann in diesem Fall für die Dauer verlangt werden, die es uns ermöglicht, die Richtigkeit der Daten zu überprüfen.</li>
+            <li>Die Verarbeitung ist unrechtmäßig und Sie verlangen statt Löschung die Einschränkung der Nutzung Ihrer personenbezogenen Daten.</li>
+            <li>Ihre personenbezogenen Daten werden von uns nicht länger für die Zwecke der Verarbeitung benötigt, die Sie jedoch zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen benötigen.</li>
+            <li>Sie haben Widerspruch gem. Art. 21 Abs. 1 DSGVO eingelegt. Die Einschränkung der Verarbeitung kann solange verlangt werden, wie noch nicht feststeht, ob unsere berechtigten Gründe gegenüber Ihren Gründen überwiegen.</li>
+          </ul>
+          <p>Einschränkung der Verarbeitung bedeutet, dass die personenbezogenen Daten nur mit Ihrer Einwilligung oder zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen oder zum Schutz der Rechte einer anderen natürlichen oder juristischen Person oder aus Gründen eines wichtigen öffentlichen Interesses verarbeitet werden. Bevor wir die Einschränkung aufheben, haben wir die Pflicht, Sie darüber zu unterrichten.</p>
+        </div>
+
+        <div class="legal-sub">
+          <h3>Datenübertragbarkeit</h3>
+          <p>Sie haben ein Recht auf Datenübertragbarkeit, sofern die Verarbeitung auf Ihrer Einwilligung (Art. 6 Abs. 1 Satz 1 Buchst. a) oder Art. 9 Abs. 2 Buchst. a) DSGVO) oder auf einem Vertrag beruht, dessen Vertragspartei Sie sind, und die Verarbeitung mithilfe automatisierter Verfahren erfolgt. Das Recht auf Datenübertragbarkeit beinhaltet in diesem Fall folgende Rechte, sofern hierdurch nicht die Rechte und Freiheiten anderer Personen beeinträchtigt werden: Sie können von uns verlangen, die personenbezogenen Daten, die Sie uns bereitgestellt haben, in einem strukturierten, gängigen und maschinenlesbaren Format zu erhalten. Sie haben das Recht, diese Daten einem anderen Verantwortlichen ohne Behinderung unsererseits zu übermitteln. Soweit technisch machbar, können Sie von uns verlangen, dass wir Ihre personenbezogenen Daten direkt an einen anderen Verantwortlichen übermitteln.</p>
+        </div>
+
+        <div class="legal-sub">
+          <h3>Widerspruch</h3>
+          <p>Sofern die Verarbeitung auf Art. 6 Abs. 1 Satz 1 Buchst. e) DSGVO (Wahrnehmung einer Aufgabe im öffentlichen Interesse oder in Ausübung öffentlicher Gewalt) oder auf Art. 6 Abs. 1 Satz 1 Buchst. f) DSGVO (berechtigtes Interesse des Verantwortlichen oder eines Dritten) beruht, haben Sie das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung der Sie betreffenden personenbezogenen Daten Widerspruch einzulegen. Das gilt auch für ein auf Art. 6 Abs. 1 Satz 1 Buchst. e) oder Buchst. f) DSGVO gestütztes Profiling. Nach Ausübung des Widerspruchsrechts verarbeiten wir Ihre personenbezogenen Daten nicht mehr, es sei denn, wir können zwingende schutzwürdige Gründe für die Verarbeitung nachweisen, die Ihre Interessen, Rechte und Freiheiten überwiegen, oder die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen.</p>
+          <p>Sie können jederzeit Widerspruch gegen die Verarbeitung der Sie betreffenden personenbezogenen Daten zu Zwecken der Direktwerbung einlegen. Das gilt auch für ein Profiling, das mit einer solchen Direktwerbung in Verbindung steht. Nach Ausübung dieses Widerspruchsrechts werden wir die betreffenden personenbezogenen Daten nicht mehr für Zwecke der Direktwerbung verwenden.</p>
+          <p>Sie haben die Möglichkeit, den Widerspruch telefonisch, per E-Mail, Fax oder an unsere zu Beginn dieser Datenschutzerklärung aufgeführte Postadresse unserer Kanzlei formlos mitzuteilen.</p>
+        </div>
+
+        <div class="legal-sub">
+          <h3>Widerruf einer Einwilligung</h3>
+          <p>Sie haben das Recht, eine erteilte Einwilligung jederzeit mit Wirkung für die Zukunft zu widerrufen. Der Widerruf der Einwilligung kann telefonisch, per E-Mail, Fax oder an unsere Postadresse formlos mitgeteilt werden. Durch den Widerruf wird die Rechtmäßigkeit der Datenverarbeitung, die aufgrund der Einwilligung bis zum Eingang des Widerrufs erfolgt ist, nicht berührt. Nach Eingang des Widerrufs wird die Datenverarbeitung, die ausschließlich auf Ihrer Einwilligung beruhte, eingestellt.</p>
+        </div>
+
+        <div class="legal-sub">
+          <h3>Beschwerde</h3>
+          <p>Wenn Sie der Ansicht sind, dass die Verarbeitung der Sie betreffenden personenbezogenen Daten rechtswidrig ist, können Sie Beschwerde bei einer Aufsichtsbehörde für den Datenschutz einlegen, die für den Ort Ihres Aufenthaltes oder Arbeitsplatzes oder für den Ort des mutmaßlichen Verstoßes zuständig ist.</p>
+        </div>
+      </section>
+
+      <section id="stand">
+        <h2><span>{nr('stand')}</span>Stand und Aktualisierung dieser Datenschutzerklärung</h2>
+        <p>Diese Datenschutzerklärung hat den Stand vom November 2026. Wir behalten uns vor, die Datenschutzerklärung zu gegebener Zeit zu aktualisieren, um den Datenschutz zu verbessern und/oder an geänderte Behördenpraxis oder Rechtsprechung anzupassen.</p>
+      </section>
+    </LegalDoc>
+  </div>
+</section>
+
+</Base>

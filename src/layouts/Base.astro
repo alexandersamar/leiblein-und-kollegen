@@ -1,0 +1,129 @@
+---
+// Grundgerüst aller Seiten: <head>, Icon-Sprite, Info-Leiste, Header, mobiles Menü, Schnellkontakt, Footer, Cookie-Hinweis, Skripte.
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { createHash } from 'node:crypto';
+import Sprite from '../components/Sprite.astro';
+import Topbar from '../components/Topbar.astro';
+import Header from '../components/Header.astro';
+import MobileNav from '../components/MobileNav.astro';
+import Rail from '../components/Rail.astro';
+import Footer from '../components/Footer.astro';
+import MobileCta from '../components/MobileCta.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import { firm, socials } from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  noindex?: boolean;
+  jsonLd?: object[];
+  plainHeader?: boolean;  // Header wie Startseite: ohne Linie (Seiten ohne Brotkrumen)
+}
+const {
+  title,
+  description,
+  ogTitle = title,
+  ogDescription = description,
+  ogImage = '/assets/img/og-image.jpg',
+  ogImageAlt = 'Leiblein + Kollegen – Steuern + Strategie für Unternehmen, die wachsen.',
+  noindex = false,
+  jsonLd = [],
+  plainHeader = false,
+} = Astro.props;
+
+// Vorschau-Build (z. B. GitHub Pages, PREVIEW=1): alle Seiten für Suchmaschinen sperren
+const preview = !!process.env.PREVIEW;
+
+// Domain nur verwenden, wenn sie in astro.config.mjs gesetzt ist
+const site = Astro.site;
+const canonical = site && !noindex ? new URL(Astro.url.pathname, site).href : null;
+const ogImageUrl = site ? new URL(ogImage, site).href : null;
+
+// Versionsnummer für CSS/JS aus dem Dateiinhalt: nach jeder Änderung lädt der Browser automatisch die neue Datei
+const version = (file: string) => createHash('md5').update(readFileSync(join(process.cwd(), 'public', 'assets', file))).digest('hex').slice(0, 8);
+const cssV = version('styles.css');
+const jsV = version('main.js');
+
+// Strukturierte Daten der Kanzlei (auf jeder Seite)
+const org: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'AccountingService',
+  name: firm.name,
+  alternateName: firm.brand,
+  ...(site ? { url: site.href, image: new URL('/assets/img/og-image.jpg', site).href, logo: new URL('/assets/favicon/apple-touch-icon.png', site).href } : {}),
+  telephone: firm.phoneSchema,
+  email: firm.email,
+  address: { '@type': 'PostalAddress', streetAddress: firm.street, postalCode: firm.zip, addressLocality: firm.city, addressCountry: 'DE' },
+  areaServed: 'DE',
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'], opens: '08:00', closes: '17:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Friday', opens: '08:00', closes: '14:00' },
+  ],
+  knowsAbout: ['Steuerberatung', 'Unternehmensberatung', 'Finanzbuchhaltung', 'Lohnbuchhaltung', 'Jahresabschluss', 'Unternehmensnachfolge', 'Steuerberatung für Ärzte und Heilberufe'],
+  sameAs: socials.filter((s) => s.schema).map((s) => s.href),
+};
+const schemas = noindex ? jsonLd : [org, ...jsonLd];
+---
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/favicon/apple-touch-icon.png">
+{(noindex || preview) && <meta name="robots" content="noindex, nofollow">}
+{description && <meta name="description" content={description}>}
+{!noindex && <>
+<meta property="og:title" content={ogTitle}>
+{ogDescription && <meta property="og:description" content={ogDescription}>}
+<meta property="og:locale" content="de_DE">
+<meta property="og:type" content="website">
+{canonical && <meta property="og:url" content={canonical}>}
+<meta property="og:site_name" content="Leiblein + Kollegen">
+{ogImageUrl && <>
+<meta property="og:image" content={ogImageUrl}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content={ogImageAlt}>
+</>}
+<meta name="twitter:card" content="summary_large_image">
+</>}
+{canonical && <link rel="canonical" href={canonical}>}
+<link rel="preload" href="/assets/fonts/brix-sans-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/brix-sans-light.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href={`/assets/styles.css?v=${cssV}`}>
+{schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s, null, 2)} />)}
+</head>
+<body>
+
+<Sprite />
+
+<a class="sr-only" href="#main">Zum Inhalt springen</a>
+
+<Topbar />
+
+<Header plain={plainHeader} />
+
+<MobileNav />
+
+<main id="main">
+<slot />
+</main>
+
+<Rail />
+
+<Footer />
+
+<MobileCta />
+
+<CookieBanner />
+<script is:inline src={`/assets/main.js?v=${jsV}`}></script>
+</body>
+</html>

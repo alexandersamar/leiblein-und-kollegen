@@ -1,0 +1,11 @@
+---
+// Feste Leiste am Telefon. Auf den Anfrage-Seiten nicht: dort ist das Formular selbst das Ziel, die Leiste würde es verdecken.
+import { firm, url } from '../data/site';
+const hide = Astro.url.pathname.startsWith(url.anfrage);
+---
+{!hide && (
+<div class="mobile-cta">
+  <a class="btn btn--dark" href={firm.phoneHref} aria-label="Anrufen"><svg class="icon"><use href="#i-phone"/></svg></a>
+  <a class="btn btn--primary" href={url.anfrage}>Erstgespräch anfragen</a>
+</div>
+)}

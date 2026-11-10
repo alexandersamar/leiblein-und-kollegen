@@ -1,0 +1,90 @@
+---
+// Einzelner Beitrag: links Text (Kopf, Bild, Inhalt, Teilen), rechts mitlaufend Inhaltsverzeichnis + Ansprechpartnerin
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/page/PostCard.astro';
+import SectionHead from '../../components/page/SectionHead.astro';
+import CrumbBar from '../../components/page/CrumbBar.astro';
+import Abschluss from '../../components/home/Abschluss.astro';
+import { allPosts, formatDate, withToc, type Post } from '../../data/postsUtil';
+import { url, firm } from '../../data/site';
+
+export function getStaticPaths() {
+  return allPosts.map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props as { p: Post };
+const { body: rawBody, toc } = withToc(p.body);
+// Abschnitte: Text vor/ab jeder H2 – jeder Abschnitt ein eigener weißer Kasten (Einleitung vor der ersten H2 gehört zum ersten)
+const parts = rawBody.split(/(?=<h2 id=)/).filter((x) => x.trim());
+if (parts.length > 1 && !parts[0].startsWith('<h2')) parts.splice(0, 2, parts[0] + parts[1]);
+// Zwei Ansprech-CTAs wie bei Ahlhoff: groß (mit Foto) nach dem ersten Abschnitt, kurz etwa in der zweiten Hälfte
+const ctaBig = `<aside class="art-cta art-cta--big"><div class="art-cta__box"><div class="art-cta__txt"><p class="art-cta__t">Steuerberatung, <em>die mitdenkt.</em></p><p>Wir prüfen Ihre Situation im kostenlosen Erstgespräch – persönlich oder per Video.</p></div><a class="btn btn--primary" href="${url.anfrage}">Erstgespräch anfragen <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a></div><div class="art-cta__ph"><img src="/assets/img/real/irina-leiblein-400.webp" srcset="/assets/img/real/irina-leiblein-400.webp 400w, /assets/img/real/irina-leiblein-800.webp 800w" sizes="(max-width: 767px) 100vw, 240px" width="400" height="400" alt="Irina Leiblein, Steuerberaterin" loading="lazy"></div></aside>`;
+const ctaShort = `<aside class="art-cta"><div class="art-cta__txt"><p class="art-cta__t">Fragen zu <em>Ihrem Fall?</em></p><p>Wir melden uns innerhalb von 24 Stunden.</p></div><a class="btn btn--primary" href="${url.anfrage}">Erstgespräch anfragen <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a></aside>`;
+// Hinweis „ersetzt keine Beratung“ schließt den letzten Kasten ab (abgesetzt mit Linie) – kein eigener Kasten auf dem Seitenhintergrund
+if (parts.length) parts[parts.length - 1] += '<p class="article__note">Dieser Beitrag gibt einen allgemeinen Überblick und ersetzt keine individuelle Beratung. Sprechen Sie uns an – wir prüfen, was für Ihr Unternehmen gilt.</p>';
+const n = parts.length;
+const bigAfter = n >= 2 ? 0 : n - 1;                       // Index des Abschnitts, nach dem der große CTA steht
+const shortAfter = n >= 3 ? Math.floor(n / 2) : n === 2 ? 1 : -1;
+const body = parts.map((x, i) => `<section class="art__sec prose">${x}</section>` + (i === bigAfter ? ctaBig : '') + (i === shortAfter ? ctaShort : '')).join('');
+// Kurze Vorsilben wie „E-Rechnung“ nicht am Bindestrich umbrechen
+const nb = (s: string) => s.replace(/\b([A-Za-zÄÖÜ]{1,2})-(?=[A-ZÄÖÜ])/g, '$1\u2011');
+const more = allPosts.filter((x) => x.slug !== p.slug).slice(0, 3);
+const nr = (i: number) => String(i + 1).padStart(2, '0');
+const article = {
+  '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.title, description: p.excerpt,
+  ...(p.date ? { datePublished: p.date } : {}), author: { '@type': 'Organization', name: firm.name },
+};
+---
+<Base title={`${p.title} | Leiblein + Kollegen`} description={p.excerpt} jsonLd={[article]}>
+
+<section class="section section--paper pg-hero has-crumbs">
+  <CrumbBar items={[{ label: 'Wissen', href: url.wissen }, { label: p.title }]} />
+  <div class="container art">
+    <article class="art__main">
+      <header class="art__head">
+        <div class="d-head__top"><span class="d-eyebrow">{p.category}</span>
+        <h1>{nb(p.title)}</h1></div>
+        <p class="lead">{p.excerpt}</p>
+        <div class="art__by"><span class="art__by-ico" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 0v16M0 8h16"/></svg></span><span>Veröffentlicht von <b>Leiblein + Kollegen</b></span>{p.date && <span><time datetime={p.date}>{formatDate(p.date)}</time></span>}<span>{p.readingMinutes} Min. Lesezeit</span></div>
+      </header>
+      {p.image && <div class="art__img"><picture><source type="image/webp" srcset={`/assets/img/${p.image}-800.webp 800w, /assets/img/${p.image}-1200.webp 1200w, /assets/img/${p.image}-1600.webp 1600w`} sizes="(min-width: 1024px) 800px, 100vw"><img src={`/assets/img/${p.image}-1600.jpg`} alt="" width="800" height="533" decoding="async"></picture></div>}
+      <div class="art__body" set:html={body} />
+      <div class="share">
+        <b>Beitrag teilen</b>
+        <div class="share__links" data-share>
+          <button type="button" class="share__copy" data-share-copy><span class="share__ico" aria-hidden="true"><svg class="share__ico-link" viewBox="0 0 20 20"><path d="M10.6599 13.1656L11.8521 11.9727C13.8273 9.99624 13.8273 6.79179 11.8521 4.81534C9.87687 2.8389 6.67442 2.8389 4.6992 4.81534L2.31491 7.20112C0.339693 9.17757 0.339693 12.382 2.31491 14.3585C3.2309 15.275 4.41082 15.7665 5.60988 15.833"/><path d="M9.34006 6.83442L8.14791 8.02731C6.1727 10.0038 6.1727 13.2082 8.14791 15.1847C10.1231 17.1611 13.3256 17.1611 15.3008 15.1847L17.6851 12.7989C19.6603 10.8224 19.6603 7.61798 17.6851 5.64153C16.7691 4.72497 15.5892 4.23346 14.3901 4.16699"/></svg><svg class="share__ico-ok" viewBox="0 0 20 20"><path pathLength="1" d="M2 11.36l3.14 3.58L13 6"/><path pathLength="1" d="M18 6.06 9.43 15l-.43-.56"/></svg></span><span class="share__label" aria-live="polite">Link kopieren</span></button>
+          <a data-share-to="linkedin" href="#" target="_blank" rel="noopener" aria-label="Auf LinkedIn teilen"><svg class="soc-ico" aria-hidden="true"><use href="#s-linkedin"/></svg></a>
+          <a data-share-to="xing" href="#" target="_blank" rel="noopener" aria-label="Auf XING teilen"><svg class="soc-ico" aria-hidden="true"><use href="#s-xing"/></svg></a>
+          <a data-share-to="facebook" href="#" target="_blank" rel="noopener" aria-label="Auf Facebook teilen"><svg class="soc-ico" aria-hidden="true"><use href="#s-facebook"/></svg></a>
+          <a data-share-to="mail" href="#" aria-label="Per E-Mail teilen"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></a>
+        </div>
+      </div>
+      <a class="link-arrow art__back" href={url.wissen}><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg> <span>Zurück zur Übersicht</span></a>
+    </article>
+
+    <aside class="art__aside">
+      {toc.length > 1 && <nav class="legal-toc" aria-label="Inhaltsübersicht">
+        <span class="legal-toc__h">Inhalt</span>
+        <ol>{toc.map((t, i) => <li><a href={`#${t.id}`}><span>{nr(i)}</span>{t.title}</a></li>)}</ol>
+      </nav>}
+      <div class="askcard">
+        <div class="askcard__who"><img src="/assets/img/real/irina-leiblein-avatar-128.webp" alt="" width="56" height="56"><span><b>Irina Leiblein</b>Steuerberaterin · Geschäftsführerin</span></div>
+        <h2>Fragen zu diesem Thema?</h2>
+        <div class="askcard__btns">
+          <a class="btn btn--primary" href={url.anfrage}>Anfrage starten <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--line" href={firm.phoneHref}><svg class="icon"><use href="#i-phone"/></svg> {firm.phone}</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <SectionHead eyebrow="Weiterlesen" title="Weitere <em>Beiträge.</em>" start />
+    <div class="pgrid pgrid--slider reveal">{more.map((x) => <PostCard p={x} />)}</div>
+  </div>
+</section>
+
+<Abschluss />
+
+</Base>

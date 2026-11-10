@@ -1,0 +1,10 @@
+---
+import { firm } from '../data/site';
+---
+<nav class="rail" aria-label="Schnellkontakt">
+  <ul>
+    <li><a href={firm.phoneHref} aria-label={`Anrufen: ${firm.phone}`}><svg class="icon"><use href="#i-phone"/></svg><span class="rail__pill">{firm.phone}</span></a></li>
+    <li><a href={`mailto:${firm.email}`} aria-label={`E-Mail an ${firm.email}`}><svg class="icon"><use href="#i-mail"/></svg><span class="rail__pill">{firm.email}</span></a></li>
+    <li><a href={firm.maps} target="_blank" rel="noopener" aria-label={`Anfahrt: ${firm.street}, ${firm.zip} ${firm.city}`}><svg class="icon"><use href="#i-pin"/></svg><span class="rail__pill">{firm.street}, {firm.city}</span></a></li>
+  </ul>
+</nav>

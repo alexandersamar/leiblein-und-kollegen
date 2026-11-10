@@ -1,0 +1,72 @@
+---
+// Erklärung zur Barrierefreiheit (für die neue Website; Bewertung = eigene Prüfung, vor Livegang zu bestätigen)
+import Base from '../layouts/Base.astro';
+import LegalHead from '../components/legal/LegalHead.astro';
+import LegalDoc from '../components/legal/LegalDoc.astro';
+import { firm } from '../data/site';
+
+const sections = [
+  { id: 'geltung', title: 'Geltungsbereich' },
+  { id: 'stand', title: 'Stand der Vereinbarkeit' },
+  { id: 'einschraenkungen', title: 'Nicht barrierefreie Inhalte' },
+  { id: 'umsetzung', title: 'Was wir umsetzen' },
+  { id: 'feedback', title: 'Rückmeldung und Kontakt' },
+  { id: 'schlichtung', title: 'Schlichtungsstelle' },
+];
+const nr = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).padStart(2, '0');
+---
+<Base title="Erklärung zur Barrierefreiheit | Leiblein + Kollegen" description="Erklärung zur digitalen Barrierefreiheit der Website der Leiblein & Kollegen Steuerberatungsgesellschaft mbH: Stand der Vereinbarkeit, bekannte Einschränkungen und Kontakt für Rückmeldungen.">
+
+<!-- ====================== Barrierefreiheit ====================== -->
+<section class="section section--paper legal">
+  <div class="container">
+    <LegalHead title="Barrierefreiheit" lead="Unsere Website soll für alle Menschen gut nutzbar sein – unabhängig von Einschränkungen, Endgerät oder Hilfsmitteln." />
+
+    <LegalDoc sections={sections}>
+      <section id="geltung">
+        <h2><span>{nr('geltung')}</span>Geltungsbereich</h2>
+        <p>Die {firm.name} setzt sich dafür ein, die digitale Barrierefreiheit für Menschen mit Behinderungen zu gewährleisten. Wir verbessern kontinuierlich die Benutzerfreundlichkeit für alle und wenden die entsprechenden Standards (WCAG 2.2, BITV 2.0 und die Norm EN 301 549) für die Zugänglichkeit an.</p>
+        <p>Diese Erklärung zur digitalen Barrierefreiheit gilt für diese Website der {firm.name}.</p>
+      </section>
+
+      <section id="stand">
+        <h2><span>{nr('stand')}</span>Stand der Vereinbarkeit mit den Anforderungen</h2>
+        <p>Diese Website ist mit den Anforderungen der Web Content Accessibility Guidelines (WCAG) 2.2, Konformitätsstufe AA, und der Barrierefreie-Informationstechnik-Verordnung (BITV 2.0) teilweise vereinbar. Die unten aufgeführten Inhalte sind noch nicht barrierefrei.</p>
+      </section>
+
+      <section id="einschraenkungen">
+        <h2><span>{nr('einschraenkungen')}</span>Nicht barrierefreie Inhalte</h2>
+        <p>Die folgenden Inhalte sind nicht barrierefrei, da sie nicht mit der zugrundeliegenden harmonisierten Norm EN 301 549 vereinbar sind:</p>
+        <ul>
+          <li>Kleine Überzeilen und Hervorhebungen in roter Schrift erreichen auf hellem Hintergrund nicht das geforderte Kontrastverhältnis von 4,5:1. <span class="legal-ref">WCAG 1.4.3</span></li>
+        </ul>
+        <p>Wir arbeiten daran, diese Einschränkung zu beheben.</p>
+      </section>
+
+      <section id="umsetzung">
+        <h2><span>{nr('umsetzung')}</span>Was wir umsetzen</h2>
+        <ul>
+          <li>Alle Inhalte sind per Tastatur erreichbar; ein Link „Zum Inhalt springen“ führt direkt zum Hauptinhalt.</li>
+          <li>Bilder haben beschreibende Alternativtexte, rein dekorative Grafiken werden von Screenreadern übergangen.</li>
+          <li>Überschriften, Navigation und Bereiche sind semantisch ausgezeichnet.</li>
+          <li>Die Website passt sich allen Bildschirmgrößen an und lässt sich ohne Informationsverlust vergrößern.</li>
+          <li>Bewegungen und Animationen werden reduziert, wenn Sie dies in Ihrem Betriebssystem eingestellt haben.</li>
+        </ul>
+        <p>Diese Erklärung wurde am 5. November 2026 erstellt. Grundlage ist eine eigene Prüfung der Website.</p>
+      </section>
+
+      <section id="feedback">
+        <h2><span>{nr('feedback')}</span>Rückmeldung und Kontaktangaben</h2>
+        <p>Sie haben eine Anmerkung oder einen Hinweis zu Barrieren auf dieser Website? Bitte nehmen Sie mit uns Kontakt auf. Wir erklären Ihnen, welche Barrieren bestehen, und Sie können sich informieren, welche Ausnahmen wir gemacht haben. Wir beantworten Ihre Fragen schnellstmöglich, spätestens jedoch innerhalb der gesetzlichen Frist von sechs Wochen. Vielen Dank für Ihr Feedback.</p>
+        <p class="legal-address"><b>{firm.name}</b><br>{firm.street}<br>{firm.zip} {firm.city}<br>Tel.: <a href={firm.phoneHref}>{firm.phone}</a><br>E-Mail: <a href={`mailto:${firm.email}`}>{firm.email}</a></p>
+      </section>
+
+      <section id="schlichtung">
+        <h2><span>{nr('schlichtung')}</span>Schlichtungsstelle</h2>
+        <p>Hinweis zu § 36 VSBG: Wir nehmen an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle nicht teil und sind dazu auch nicht verpflichtet.</p>
+      </section>
+    </LegalDoc>
+  </div>
+</section>
+
+</Base>

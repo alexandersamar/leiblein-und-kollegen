@@ -1,0 +1,53 @@
+---
+// Startseite
+import Base from '../layouts/Base.astro';
+import Hero from '../components/home/Hero.astro';
+import Vertrauen from '../components/home/Vertrauen.astro';
+import Branchen from '../components/home/Branchen.astro';
+import Leistungen from '../components/home/Leistungen.astro';
+import DasPlus from '../components/home/DasPlus.astro';
+import Situationen from '../components/home/Situationen.astro';
+import Kanzlei from '../components/home/Kanzlei.astro';
+import Stimmen from '../components/home/Stimmen.astro';
+import Ablauf from '../components/home/Ablauf.astro';
+import Karriere from '../components/home/Karriere.astro';
+import Wissen from '../components/home/Wissen.astro';
+import Faq from '../components/home/Faq.astro';
+import Abschluss from '../components/home/Abschluss.astro';
+import faq from '../data/faq.json';
+---
+<Base
+  title="Digitaler Steuerberater für Unternehmen | Leiblein + Kollegen, Aschaffenburg"
+  description="Digitaler Steuerberater aus Aschaffenburg für Unternehmen in ganz Deutschland: Buchhaltung, Lohn, Jahresabschluss und Unternehmensberatung. Steuerberater für Ärzte und Heilberufe (Fachberatung DStV). DATEV Digitale Kanzlei 2026."
+  ogTitle="Digitaler Steuerberater für Unternehmen | Leiblein + Kollegen"
+  ogDescription="Steuern + Strategie für Unternehmen, die wachsen – digital, persönlich, deutschlandweit. Aus Aschaffenburg."
+  jsonLd={[faq]}
+>
+
+<Hero />
+
+<Vertrauen />
+
+<Branchen />
+
+<Leistungen />
+
+<DasPlus />
+
+<Situationen />
+
+<Kanzlei />
+
+<Stimmen />
+
+<Ablauf />
+
+<Karriere />
+
+<Wissen />
+
+<Faq />
+
+<Abschluss />
+
+</Base>

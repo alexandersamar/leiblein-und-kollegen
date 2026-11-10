@@ -1,0 +1,10 @@
+---
+// Wissen: Seite 1 eines Themas
+import WissenList from '../../../../components/page/WissenList.astro';
+import { allPosts, categories, catSlug, pages } from '../../../../data/postsUtil';
+export function getStaticPaths() {
+  return categories.map((c) => { const p = pages(allPosts.filter((x) => x.category === c)); return { params: { cat: catSlug(c) }, props: { items: p[0], total: p.length, cat: c } }; });
+}
+const { items, total, cat } = Astro.props;
+---
+<WissenList items={items} page={1} total={total} cat={cat} />

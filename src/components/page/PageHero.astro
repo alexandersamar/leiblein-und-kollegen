@@ -1,0 +1,66 @@
+---
+// Seitenkopf der Unterseiten: Brotkrumen, Überzeile, H1 (em = rot), Einleitung, Buttons, optional Bild
+import { firm, url } from '../../data/site';
+import CrumbBar from './CrumbBar.astro';
+interface Img { webp: string; src: string; alt: string; width: number; height: number; position?: string; flip?: boolean }  // flip: Motiv spiegeln, damit die Person zum Text blickt
+interface Props {
+  crumbs?: { label: string; href?: string }[];  // ohne Brotkrumen: Kopf wie Startseite
+  eyebrow: string;
+  title: string;          // HTML erlaubt (<em>, <br>)
+  lead?: string;
+  note?: string;          // kurze Zeile mit roter Linie, z. B. Qualifikation
+  img?: Img;
+  cta?: { label: string; href: string } | false;
+  phone?: boolean;
+  center?: boolean;      // Kopf mittig (ohne Bild)
+  team?: boolean;        // Team-Zeile (Avatare + „Rund 20 Fachkräfte“) unter den Buttons – wie Kanzlei-Block der Startseite
+  frame?: boolean;       // Bild nicht als Fläche, sondern gerahmt rechts (3:2, abgeschrägte Ecke) – Leistungsseiten
+}
+const { crumbs = [], eyebrow, title, lead, note, img, cta = { label: 'Erstgespräch anfragen', href: url.anfrage }, phone = true, center = false, frame = false, team = false } = Astro.props;
+---
+{img && !frame ? (
+<section class={`hero-d pg-hero-d${crumbs.length ? ' has-crumbs' : ''}`}>
+  <div class="pg-hero-d__top">
+  {crumbs.length > 0 && <CrumbBar items={crumbs} />}
+  <div class="container">
+    <div class="hero-d__content">
+      <div class="hero-d__intro"><div class="hero-d__head">
+        <span class="d-eyebrow">{eyebrow}</span>
+        <h1 class="hero-d__claim" set:html={title} /></div>
+        {lead && <p class="lead">{lead}</p>}</div>
+      {note && <p class="hero-d__fit">{note}</p>}
+      {(cta || phone) && <div class="btn-row">
+        {cta && <a class="btn btn--primary" href={cta.href}>{cta.label} <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a>}
+        {phone && <a class="btn btn--white" href={firm.phoneHref}><svg class="icon"><use href="#i-phone"/></svg> {firm.phone}</a>}
+      </div>}
+    </div>
+  </div>
+  </div>
+  <div class="hero-d__img">
+    <div class={`ph ph--light${img.flip ? ' is-flipped' : ''}`}><picture><source type="image/webp" srcset={img.webp} sizes="(min-width: 1024px) 66vw, 100vw"><img src={img.src} alt={img.alt} width={img.width} height={img.height} style={img.position ? `object-position:${img.position}` : undefined} fetchpriority="high"></picture></div>
+  </div>
+</section>
+) : (
+<section class={`section section--paper pg-hero${crumbs.length ? ' has-crumbs' : ''}${center ? ' pg-hero--center' : ''}${img ? ' pg-hero--frame' : ''}`}>
+  {crumbs.length > 0 && <CrumbBar items={crumbs} />}
+  <div class="container pg-hero__grid">
+    <div class="pg-hero__txt">
+      <div class="pg-hero__intro"><div class="d-head__top"><span class="d-eyebrow">{eyebrow}</span>
+      <h1 class="d-title" set:html={title} /></div>
+      {lead && <p class="lead">{lead}</p>}</div>
+      {note && <p class="pg-hero__note">{note}</p>}
+      {(cta || phone) && <div class="pg-hero__btns">
+        {cta && <a class="btn btn--primary" href={cta.href}>{cta.label} <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a>}
+        {phone && <a class="btn btn--line" href={firm.phoneHref}><svg class="icon"><use href="#i-phone"/></svg> {firm.phone}</a>}
+      </div>}
+      {team && <div class="team-row team-row--light">
+        <div class="team-row__faces">{['elina-mergelsberg', 'nikolas-schmiedecke', 'yevheniia-borodina', 'tim-nguyen', 'michelle-raab', 'alper-oeztuerk'].map((n) => <img src={`/assets/img/real/${n}-avatar-128.webp`} alt="" width="44" height="44">)}</div>
+        <p><b>Rund 20 Fachkräfte</b><span>über 20 Jahre Erfahrung · 100 % digital</span></p>
+      </div>}
+    </div>
+    {img && <figure class="pg-hero__ph">
+      <div class={`pg-hero__img${img.flip ? ' is-flipped' : ''}`}><picture><source type="image/webp" srcset={img.webp} sizes="(min-width: 1024px) 50vw, 100vw"><img src={img.src} alt={img.alt} width={img.width} height={img.height} style={img.position ? `object-position:${img.position}` : undefined} fetchpriority="high"></picture></div>
+    </figure>}
+  </div>
+</section>
+)}

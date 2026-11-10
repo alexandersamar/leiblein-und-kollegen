@@ -1,0 +1,40 @@
+---
+import { url, navLeistungen, navBranchen, navMain } from '../data/site';
+const { plain = false } = Astro.props as { plain?: boolean };
+const isSub = Astro.url.pathname !== '/' && !plain;
+// Aktueller Bereich: Menüpunkt wie beim Hover (rot + Linie), auch auf Unterseiten (z. B. Artikel → Wissen)
+const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : Astro.url.pathname + '/';
+const inSection = (href: string) => href !== '/' && !href.includes('#') && path.startsWith(href);
+const cur = (href: string) => (path === href ? 'page' : undefined);
+---
+<!-- ====================== Header ====================== -->
+<header class={isSub ? 'header header--sub' : 'header'}>
+  <div class="container header__inner">
+    <a class="header__logo" href={url.home} aria-label="Leiblein + Kollegen – Startseite">
+      <img src="/assets/logo/logo-neg_friendlyred.svg" alt="Leiblein + Kollegen" width="300" height="54">
+    </a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <ul class="nav__list">
+        <li class={`nav__item${path.startsWith('/leistungen/') ? ' is-current' : ''}`}>
+          <button class="nav__link" aria-haspopup="true">Leistungen <svg class="icon"><use href="#i-chev"/></svg></button>
+          <div class="dropdown dropdown--d1 dropdown--all">
+            {navLeistungen.map((col) => <div class="dropdown__col">{col.map((grp) => <div class="dropdown__grp"><span class="dropdown__group">{grp.group}</span>{grp.links.map((l) => <a href={l.href} aria-current={cur(l.href)}>{l.label}</a>)}</div>)}</div>)}
+            <span class="dropdown__sep" aria-hidden="true"></span>
+            <a class="dropdown__all link-arrow" href={url.leistungen} aria-current={cur(url.leistungen)}><span>Alle Leistungen</span> <svg class="icon"><use href="#i-arrow"/></svg></a>
+          </div>
+        </li>
+        <li class={`nav__item${path.startsWith('/branchen/') ? ' is-current' : ''}`}>
+          <button class="nav__link" aria-haspopup="true">Branchen <svg class="icon"><use href="#i-chev"/></svg></button>
+          <div class="dropdown dropdown--d1">
+            <div class="dropdown__col"><div class="dropdown__grp">{navBranchen.map((l) => <a href={l.href} aria-current={cur(l.href)}>{l.label}</a>)}</div></div>
+          </div>
+        </li>
+        {navMain.map((l) => <li class={`nav__item${inSection(l.href) ? ' is-current' : ''}`}><a class="nav__link" href={l.href} aria-current={cur(l.href)}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="header__actions">
+      <a class="btn btn--dark btn--sm" href={url.anfrage}>Erstgespräch anfragen</a>
+      <button class="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-nav"><span class="burger__i"><span></span><span></span></span></button>
+    </div>
+  </div>
+</header>

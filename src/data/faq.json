@@ -1,0 +1,13 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Für welche Unternehmen ist Leiblein + Kollegen die richtige Kanzlei?", "acceptedAnswer": { "@type": "Answer", "text": "Wir sind spezialisiert auf Unternehmen ab 100.000 € Jahresumsatz, die digital mit uns zusammenarbeiten möchten – besonders im Gesundheitswesen, im Handwerk, im E-Commerce und in der Immobilienbranche sowie GmbHs und Personengesellschaften." } },
+    { "@type": "Question", "name": "Sind Sie ein digitaler Steuerberater – auch außerhalb von Aschaffenburg?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Wir betreuen Mandanten in ganz Deutschland – Belege, Auswertungen und Besprechungen laufen digital über DATEV. Persönliche Termine in Aschaffenburg sind trotzdem möglich." } },
+    { "@type": "Question", "name": "Wie funktioniert der Wechsel von meinem bisherigen Steuerberater?", "acceptedAnswer": { "@type": "Answer", "text": "Wir stimmen die Übergabe der Unterlagen mit Ihrem bisherigen Berater ab und starten über das DATEV-Online-Onboarding." } },
+    { "@type": "Question", "name": "Was passiert im Erstgespräch?", "acceptedAnswer": { "@type": "Answer", "text": "Ein Partner bespricht mit Ihnen Ihre Situation, Ihre Ziele und welche Leistungen sinnvoll sind." } },
+    { "@type": "Question", "name": "Was kostet die Zusammenarbeit?", "acceptedAnswer": { "@type": "Answer", "text": "Die Vergütung richtet sich nach der Steuerberatervergütungsverordnung (StBVV) bzw. nach individueller Vereinbarung." } },
+    { "@type": "Question", "name": "Übernehmen Sie auch Buchhaltung und Lohn?", "acceptedAnswer": { "@type": "Answer", "text": "Ja – digitale Finanzbuchhaltung und Lohnbuchhaltung gehören zu unserem Kern, inklusive Schnittstellen zu Shop, Kasse und Bank." } },
+    { "@type": "Question", "name": "Betreuen Sie auch Privatpersonen?", "acceptedAnswer": { "@type": "Answer", "text": "Unser Schwerpunkt liegt auf Unternehmen. Unternehmerinnen und Unternehmer sowie vermögende Privatpersonen begleiten wir gern auch privat. Für reine Arbeitnehmer-Steuererklärungen empfehlen wir einen Lohnsteuerhilfeverein." } }
+  ]
+}

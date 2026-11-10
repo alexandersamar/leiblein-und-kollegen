@@ -1,0 +1,7 @@
+---
+// Wissen: Seite 1 aller Beiträge
+import WissenList from '../../components/page/WissenList.astro';
+import { allPosts, pages } from '../../data/postsUtil';
+const p = pages(allPosts);
+---
+<WissenList items={p[0]} page={1} total={p.length} cat={null} />

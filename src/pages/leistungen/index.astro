@@ -1,0 +1,66 @@
+---
+// Übersicht aller Leistungen: redaktionelles Verzeichnis – drei Säulen als Zeilen auf Linien, Leistungen als Einträge
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/page/PageHero.astro';
+import Vertrauen from '../../components/home/Vertrauen.astro';
+import Ablauf from '../../components/home/Ablauf.astro';
+import Abschluss from '../../components/home/Abschluss.astro';
+import { services } from '../../data/site';
+import { serviceTeasers } from '../../data/services';
+
+const pillars = [
+  { name: 'Beratung', lead: 'Wir denken steuerlich und betriebswirtschaftlich zugleich – von der Gründung bis zur Nachfolge.', keys: ['beratung', 'gruendung', 'nachfolge', 'backoffice'] },
+  { name: 'Buchhaltung', lead: 'Ihre Zahlen als Steuerungsinstrument – digital, aktuell und jederzeit abrufbar.', keys: ['fibu', 'lohn'] },
+  { name: 'Steuern', lead: 'Jahresabschluss, Steuererklärungen und Begleitung bei Prüfungen aus einer Hand.', keys: ['jahresabschluss'] },
+] as const;
+---
+<Base title="Leistungen: Beratung, Buchhaltung, Steuern | Leiblein + Kollegen" description="Unternehmensberatung, Gründung, Nachfolge, Back-Office, digitale Finanz- und Lohnbuchhaltung, Jahresabschluss und betriebliche Steuern – für Unternehmen in ganz Deutschland.">
+
+<PageHero
+  crumbs={[{ label: 'Leistungen' }]}
+  eyebrow="Beratung · Buchhaltung · Steuern"
+  title="Steuern, Zahlen, Strategie – <em>aus einer Hand.</em>"
+  note="Für Unternehmen ab 100.000 € Jahresumsatz, die digital zusammenarbeiten möchten"
+  lead="Sieben Leistungen in drei Säulen. Sie wählen, was Ihr Unternehmen braucht – wir verbinden es zu einem Ganzen."
+  team
+  frame
+  img={{ webp: '/assets/img/leistungen-hero-800.webp 800w, /assets/img/leistungen-hero-1400.webp 1400w, /assets/img/leistungen-hero-2000.webp 2000w', src: '/assets/img/leistungen-hero-2000.jpg', alt: 'Zwei Kolleginnen besprechen Zahlen am Bildschirm in einem hellen Büro', width: 2000, height: 1333 }}
+/>
+
+<Vertrauen band={false} />
+
+<section class="section">
+  <div class="container">
+    <div class="d-head reveal">
+      <div class="d-head__top"><span class="d-eyebrow">Alle Leistungen</span>
+      <h2 class="d-title d-title--line">Drei Säulen, <em>ein Ansprechpartner.</em></h2></div>
+      <p>Wer Ihre Buchhaltung macht, kennt Ihre Zahlen am besten. Deshalb verbinden wir laufende Betreuung mit Beratung, die Ihr Unternehmen voranbringt.</p>
+    </div>
+    <div class="pidx reveal">
+      {pillars.map((p, i) => (
+        <div class="pidx__row">
+          <div class="pidx__head">
+            <span class="pidx__num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{p.name}</h3>
+            <p>{p.lead}</p>
+          </div>
+          <ul class="pidx__list">
+            {p.keys.map((k) => (
+              <li class="pidx__item">
+                <h4>{services[k].label}</h4>
+                <p>{serviceTeasers[k]}</p>
+                <a class="link-arrow" href={services[k].href} aria-label={`Mehr erfahren: ${services[k].label}`}><span>Mehr erfahren</span> <svg class="icon"><use href="#i-arrow"/></svg></a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<Ablauf />
+
+<Abschluss />
+
+</Base>

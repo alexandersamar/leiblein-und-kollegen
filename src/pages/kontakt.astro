@@ -1,0 +1,77 @@
+---
+// Kontakt: Adresse, Telefon/E-Mail, Öffnungszeiten, Anfahrt mit Parkhinweis, kurzes Kontaktformular.
+// Formularversand wird beim Livegang angebunden. Karte: OpenFreeMap erst nach Einwilligung (Komponente Karte).
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/page/PageHero.astro';
+import Vertrauen from '../components/home/Vertrauen.astro';
+import Karte from '../components/page/Karte.astro';
+import FormError from '../components/FormError.astro';
+import { firm, url } from '../data/site';
+---
+<Base title="Kontakt | Leiblein + Kollegen, Steuerberater in Aschaffenburg" description="Leiblein + Kollegen, Frohsinnstraße 24, 63739 Aschaffenburg – Telefon 06021 45670-0, info@leiblein-und-kollegen.de. Mandanten-Parkplätze im Hof, Einfahrt Elisenstraße 29.">
+
+<PageHero
+  crumbs={[{ label: 'Kontakt' }]}
+  eyebrow="So erreichen Sie uns"
+  title="Wir sind <em>für Sie da.</em>"
+  lead="Rufen Sie uns an, schreiben Sie uns oder besuchen Sie uns in Aschaffenburg. Die meisten Mandanten arbeiten mit uns übrigens komplett digital – egal, wo in Deutschland sie sitzen."
+  note="Mo – Do 08:00 – 17:00 Uhr · Fr 08:00 – 14:00 Uhr · und nach Vereinbarung"
+  team
+  frame
+  img={{ webp: '/assets/img/kontakt-frame-800.webp 800w, /assets/img/kontakt-frame-1200.webp 1200w, /assets/img/kontakt-frame-1600.webp 1600w', src: '/assets/img/kontakt-frame-1600.jpg', alt: 'Mitarbeiterin der Kanzlei telefoniert lächelnd am Schreibtisch', width: 1600, height: 1067 }}
+/>
+
+<Vertrauen band={false} />
+
+<!-- Direkter Draht: Kopf links, Kontaktdaten als Tabelle auf Linien -->
+<section class="section">
+  <div class="container split">
+    <div class="split__head reveal">
+      <div class="d-head__top"><span class="d-eyebrow">Direkter Draht</span>
+      <h2 class="d-title">Ein Anruf genügt – <em>oder eine Zeile.</em></h2></div>
+      <p class="lead">Unser Büro ist für Sie da und verbindet Sie mit Ihrer festen Ansprechpartnerin oder Ihrem festen Ansprechpartner.</p>
+    </div>
+    <dl class="ctab reveal">
+      <div><dt>Telefon</dt><dd><a class="ctab__big" href={firm.phoneHref}>{firm.phone}</a></dd></div>
+      <div><dt>E-Mail</dt><dd><a class="ctab__big" href={`mailto:${firm.email}`}>{firm.email}</a></dd></div>
+      <div><dt>Adresse</dt><dd><span><b>{firm.name}</b><br>{firm.street}, {firm.zip} {firm.city}</span><a class="link-arrow" href={firm.maps} target="_blank" rel="noopener"><span>Route planen</span> <svg class="icon"><use href="#i-arrow"/></svg></a></dd></div>
+      <div><dt>Öffnungszeiten</dt><dd><span>Mo – Do: 08:00 – 17:00 Uhr<br>Fr: 08:00 – 14:00 Uhr<br>und nach Vereinbarung</span></dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- Anfahrt links (Text + Karte darunter), rechts das kurze Kontaktformular -->
+<section class="section section--paper">
+  <div class="container split split--map">
+    <div class="map-col reveal">
+    <div class="split__head">
+      <div class="d-head__top"><span class="d-eyebrow">Anfahrt</span>
+      <h2 class="d-title">Im Herzen <em>Aschaffenburgs.</em></h2></div>
+      <p class="lead">Unsere Kanzlei liegt in der Innenstadt, ganz in der Nähe des Hauptbahnhofs, und ist bequem mit öffentlichen Verkehrsmitteln erreichbar.</p>
+      <ul class="plus-list">
+        <li>Mandanten-Parkplätze in unserem Hof</li>
+        <li>Einfahrt über die Elisenstraße 29, gegenüber der Apotheke im Elisenpalais</li>
+        <li>Wenige Gehminuten vom Hauptbahnhof</li>
+      </ul>
+    </div>
+    <Karte />
+    </div>
+    <div class="form-card reveal">
+      <div class="split__head"><div class="d-head__top"><span class="d-eyebrow">Nachricht schreiben</span><h2 class="form-card__title">Für Mandanten und alle anderen Anliegen</h2></div><p>Sie möchten neu Mandant werden? Dann nutzen Sie am besten unsere <a href={url.anfrage}>Anfrage zum Erstgespräch</a>.</p></div>
+      <form class="form" method="post" action="" novalidate data-check>
+        <div class="field"><label for="k-vorname">Vorname *</label><input id="k-vorname" name="vorname" autocomplete="given-name" required></div>
+        <div class="field"><label for="k-name">Name *</label><input id="k-name" name="name" autocomplete="family-name" required></div>
+        <div class="field"><label for="k-mail">E-Mail *</label><input id="k-mail" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="k-tel">Telefon</label><input id="k-tel" name="telefon" type="tel" autocomplete="tel"></div>
+        <div class="field full"><label for="k-msg">Nachricht *</label><textarea id="k-msg" name="nachricht" required></textarea></div>
+        <!-- Spamschutz (Honeypot): für Menschen unsichtbar, Bots füllen es aus → Server verwirft die Nachricht -->
+        <div class="hp" aria-hidden="true"><label for="k-web">Website</label><input id="k-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <label class="consent full"><input type="checkbox" name="datenschutz" required><span>Ich habe die <a href={url.datenschutz}>Datenschutzerklärung</a> zur Kenntnis genommen und stimme der Speicherung und Verarbeitung meiner Angaben zur Beantwortung meiner Anfrage zu. Die Einwilligung kann ich jederzeit per E-Mail an {firm.email} widerrufen. *</span></label>
+        <FormError class="full" />
+        <div class="full"><button class="btn btn--dark" type="submit">Nachricht senden <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></button></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</Base>

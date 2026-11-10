@@ -1,0 +1,16 @@
+---
+import { url, mobileLeistungen, navBranchen, navMain } from '../data/site';
+const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : Astro.url.pathname + '/';
+const cur = (href: string) => (path === href ? 'page' : undefined);
+const inSection = (href: string) => href !== '/' && !href.includes('#') && path.startsWith(href) ? 'true' : undefined;
+---
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile Navigation">
+  <details><summary class={path.startsWith('/leistungen/') ? 'is-current' : undefined}>Leistungen</summary><div>
+    <a class="mobile-nav__all" href={url.leistungen} aria-current={cur(url.leistungen)}>Alle Leistungen</a>
+    {mobileLeistungen.map((l) => <a href={l.href} aria-current={cur(l.href)}>{l.label}</a>)}
+  </div></details>
+  <details><summary class={path.startsWith('/branchen/') ? 'is-current' : undefined}>Branchen</summary><div>
+    {navBranchen.map((l) => <a href={l.href} aria-current={cur(l.href)}>{l.label}</a>)}
+  </div></details>
+  {navMain.map((l) => <a href={l.href} aria-current={cur(l.href) ?? inSection(l.href)}>{l.label}</a>)}
+</nav>

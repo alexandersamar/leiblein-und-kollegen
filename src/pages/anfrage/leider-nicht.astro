@@ -1,0 +1,30 @@
+---
+// Freundliche Absage, wenn die Anfrage nicht zum Profil passt (Briefing: höflich, keine Daten erfasst; nicht in Suchmaschinen)
+import Base from '../../layouts/Base.astro';
+import CrumbBar from '../../components/page/CrumbBar.astro';
+import { url } from '../../data/site';
+import { rejectTexts } from '../../data/anfrage';
+---
+<Base title="Danke für Ihr Interesse | Leiblein + Kollegen" noindex>
+<section class="section section--paper pg-hero has-crumbs">
+  <CrumbBar items={[{ label: 'Erstgespräch anfragen', href: '/anfrage/' }, { label: 'Danke für Ihr Interesse' }]} />
+  <div class="container split anf">
+    <div class="split__head">
+      <div class="d-head__top"><span class="d-eyebrow">Ihre Anfrage</span>
+      <h1 class="d-title">Wir passen leider <em>nicht ideal zu Ihnen.</em></h1></div>
+      {Object.entries(rejectTexts).map(([k, t]) => <p class="lead" data-grund={k} hidden={k !== 'umsatz'}>{t}</p>)}
+      <!-- Grund aus der Adresse (?grund=…, vom Formular gesetzt) – es werden keine Daten übertragen oder gespeichert -->
+      <script is:inline>(() => { const g = new URLSearchParams(location.search).get('grund'); const el = g && document.querySelector(`[data-grund="${CSS.escape(g)}"]`); if (!el) return; document.querySelectorAll('[data-grund]').forEach((p) => { p.hidden = p !== el; }); })();</script>
+      <div class="btn-row"><a class="btn btn--primary" href={url.wissen}>Zu unseren Fachbeiträgen <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a></div>
+    </div>
+    <div class="qf">
+      <span class="qf__bar"><span>Ein paar Hinweise für Sie</span></span>
+      <ul class="anf__steps">
+        <li><b>Arbeitnehmer</b><span>Für die Einkommensteuererklärung ist ein Lohnsteuerhilfeverein oft die passende und günstige Wahl.</span></li>
+        <li><b>Kleinere Unternehmen</b><span>IHK und Handwerkskammer bieten erste kostenfreie Beratungen für Gründungen und kleinere Betriebe.</span></li>
+        <li><b>Später wieder?</b><span>Wenn Ihr Unternehmen wächst, freuen wir uns, wenn Sie wieder an uns denken.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</Base>

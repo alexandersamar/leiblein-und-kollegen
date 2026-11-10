@@ -1,0 +1,49 @@
+---
+// Wissen-Übersicht: Themen-Reiter (Links, aktiver rot unterstrichen), großer erster Beitrag, Raster 3 Spalten, Seitennavigation
+import Base from '../../layouts/Base.astro';
+import CrumbBar from './CrumbBar.astro';
+import PostCard from './PostCard.astro';
+import Abschluss from '../home/Abschluss.astro';
+import { allPosts, categories, countBy, listUrl, type Post } from '../../data/postsUtil';
+interface Props { items: Post[]; page: number; total: number; cat: string | null }
+const { items, page, total, cat } = Astro.props;
+const [first, ...rest] = items;
+const title = cat ? `${cat}: Fachbeiträge | Leiblein + Kollegen` : 'Wissen: Steuertipps und Mandanteninformationen | Leiblein + Kollegen';
+const crumbs = cat ? [{ label: 'Wissen', href: '/wissen/' }, { label: cat }] : [{ label: 'Wissen' }];
+const nums = Array.from({ length: total }, (_, i) => i + 1);
+---
+<Base title={page > 1 ? title.replace(' |', ` – Seite ${page} |`) : title} description="Fachbeiträge und Mandanteninformationen von Leiblein + Kollegen: Steuern, Buchhaltung, Gestaltung und Unternehmensführung – verständlich erklärt.">
+
+<!-- Kopf und Beiträge in einem Block -->
+<section class="section section--paper pg-hero has-crumbs pg-hero--center">
+  <CrumbBar items={crumbs} />
+  <div class="container wlist">
+    <div class="pg-hero__txt wlist__head"><div class="pg-hero__intro">
+      <div class="d-head__top"><span class="d-eyebrow">Fachbeiträge</span>
+      <h1 class="d-title" set:html={cat ? `${cat} – <em>kompakt erklärt.</em>` : 'Steuerwissen, <em>kompakt erklärt.</em>'} /></div>
+      <p class="lead">Gesetzesänderungen, Fristen und Gestaltungsideen – verständlich aufbereitet für Unternehmerinnen und Unternehmer. Fachbeiträge und Mandanteninformationen seit 2010.</p></div>
+    </div>
+
+    <div class="wlist__box">
+    <nav class="wbar reveal" aria-label="Beiträge nach Thema">
+      <a href="/wissen/" aria-current={!cat ? 'page' : undefined}>Alle Themen<sup>{allPosts.length}</sup></a>
+      {categories.map((c) => <a href={listUrl(c, 1)} aria-current={cat === c ? 'page' : undefined}>{c}<sup>{countBy(c)}</sup></a>)}
+    </nav>
+    <div class="pgrid reveal">
+      {first && <PostCard p={first} feature />}
+      {rest.map((p) => <PostCard p={p} />)}
+    </div>
+    </div>
+    {total > 1 && (
+      <nav class="pager" aria-label="Seiten">
+        {page > 1 ? <a class="pager__step" href={listUrl(cat, page - 1)}><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg>Zurück</a> : <span class="pager__step is-off" aria-hidden="true"><svg class="icon"><use href="#i-arrow-left"/></svg>Zurück</span>}
+        {nums.map((n) => n === page ? <span class="pager__num" aria-current="page">{String(n).padStart(2, '0')}</span> : <a class="pager__num" href={listUrl(cat, n)} aria-label={`Seite ${n}`}>{String(n).padStart(2, '0')}</a>)}
+        {page < total ? <a class="pager__step" href={listUrl(cat, page + 1)}>Weiter<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a> : <span class="pager__step is-off" aria-hidden="true">Weiter<svg class="icon"><use href="#i-arrow"/></svg></span>}
+      </nav>
+    )}
+  </div>
+</section>
+
+<Abschluss />
+
+</Base>

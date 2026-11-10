@@ -1,0 +1,138 @@
+---
+// Branchenseite Gesundheitswesen – Schwerpunkt der Kanzlei und Zielseite der Anzeigen (eine klare Handlung: Erstgespräch).
+// Aufbau in der Bildsprache der Startseite: Hero → Vertrauen → Zielgruppen → Leistungsumfang → Situationen → Expertin → Stimme → Ablauf → FAQ → CTA
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/page/PageHero.astro';
+import FaqBlock from '../../components/page/FaqBlock.astro';
+import Vertrauen from '../../components/home/Vertrauen.astro';
+import Ablauf from '../../components/home/Ablauf.astro';
+import Stimmen from '../../components/home/Stimmen.astro';
+import Abschluss from '../../components/home/Abschluss.astro';
+import { url, services } from '../../data/site';
+import { faqJsonLd } from '../../data/faqJsonLd';
+
+const groups = [
+  { title: 'Ärzte & Praxen', text: 'Haus- und Fachärzte, Einzelpraxen, Berufsausübungsgemeinschaften und MVZ.' },
+  { title: 'Heilpraktiker', text: 'Selbstständige Heilpraktikerinnen und Heilpraktiker – vom Start bis zur Praxis mit eigenem Team.' },
+  { title: 'Physiotherapie', text: 'Physiotherapie-Praxen und weitere Heilmittelerbringer mit Kassen- und Privatpatienten.' },
+  { title: 'Pflegedienste', text: 'Ambulante Pflegedienste – inklusive Pflegebuchführung nach der Pflege-Buchführungsverordnung.' },
+];
+const situations = [
+  { tag: 'Gründung', q: 'Ich übernehme eine Praxis – und will wissen, was sie wirklich wert ist.', a: ['Praxiswert und Kaufpreis realistisch einschätzen', 'Rechtsform, Finanzierungsplan und Unterlagen für die Bank'], link: services.gruendung, linkLabel: 'Existenzgründung' },
+  { tag: 'Investition', q: 'Neues Gerät, mehr Räume – rechnet sich das für meine Praxis?', a: ['Investitions- und Liquiditätsplanung vor der Entscheidung', 'Abschreibung und Finanzierung im Blick'], link: services.beratung, linkLabel: 'Unternehmensberatung' },
+  { tag: 'Praxisalltag', q: 'Ich will mich um Patienten kümmern, nicht um Belege.', a: ['Digitale Buchhaltung über DATEV und Lohn für das Praxisteam', 'Umsatzsteuer bei IGeL und Zusatzleistungen geprüft'], link: services.fibu, linkLabel: 'Finanzbuchhaltung' },
+  { tag: 'Abgabe', q: 'Ich möchte meine Praxis in einigen Jahren übergeben.', a: ['Abgabe frühzeitig planen, Praxiswert ermitteln', 'Steuerlich durchdachte Übergabe an Nachfolger'], link: services.nachfolge, linkLabel: 'Unternehmensnachfolge' },
+];
+// Leistungsumfang für Praxen (Texte: L+K, an die Leistungsseiten angelehnt)
+const scope = [
+  'Digitale Praxisbuchhaltung über DATEV',
+  'Lohn- und Gehaltsabrechnung für Ihr Praxisteam',
+  'Jahresabschluss bzw. Einnahmen-Überschuss-Rechnung und Steuererklärungen',
+  'Prüfung der Umsatzsteuer bei IGeL, Gutachten und Zusatzleistungen',
+  'Pflegebuchführung nach der Pflege-Buchführungsverordnung',
+  'Praxisgründung und -übernahme inkl. Bewertung des Kaufpreises',
+  'Investitions- und Liquiditätsplanung',
+  'Planung und Gestaltung der Praxisabgabe',
+];
+const faq = [
+  { q: 'Für welche Heilberufe sind Sie der richtige Ansprechpartner?', a: 'Für Ärztinnen und Ärzte, Praxen und MVZ, Heilpraktiker, Physiotherapie-Praxen und ambulante Pflegedienste – mit mindestens 100.000&nbsp;€ Jahresumsatz, die digital mit uns zusammenarbeiten möchten.' },
+  { q: 'Betreuen Sie auch Praxen außerhalb von Aschaffenburg?', a: 'Ja. Wir betreuen Mandanten in ganz Deutschland. Belege, Auswertungen und Besprechungen laufen digital über DATEV; Termine sind per Video oder bei uns in Aschaffenburg möglich.' },
+  { q: 'Unterstützen Sie bei der Gründung oder Übernahme einer Praxis?', a: 'Ja – von der Wahl der Rechtsform über den Finanzierungsplan bis zur Bewertung des Kaufpreises. Eberhard Leiblein ist zudem als Gründungscoach der KfW zugelassen.' },
+  { q: 'Sind meine Leistungen umsatzsteuerpflichtig?', a: 'Heilbehandlungen sind in der Regel umsatzsteuerfrei. Bei Leistungen ohne therapeutisches Ziel – etwa bestimmte IGeL, Gutachten oder der Verkauf von Produkten – kann Umsatzsteuer anfallen. Wir prüfen das für Ihre Praxis im Einzelfall.' },
+  { q: 'Wie läuft die Zusammenarbeit mit meiner Praxis ab?', a: 'Sie laden Belege digital hoch, wir buchen, erstellen Lohn und Auswertungen und melden uns mit den Zahlen bei Ihnen. Eine feste Ansprechpartnerin begleitet Ihre Praxis.' },
+  { q: 'Was passiert im Erstgespräch?', a: 'Wir besprechen Ihre Praxis, Ihre Ziele und welche Leistungen sinnvoll sind. Danach wissen Sie, wie eine Zusammenarbeit konkret aussehen würde.' },
+];
+---
+<Base
+  title="Steuerberater für Ärzte, Praxen und Heilberufe | Leiblein + Kollegen"
+  description="Steuerberatung für Ärzte, Praxen, Heilpraktiker, Physiotherapie und Pflegedienste – mit Irina Leiblein, Fachberaterin für das Gesundheitswesen (DStV). Digital und deutschlandweit."
+  jsonLd={[faqJsonLd(faq)]}
+>
+
+<PageHero
+  crumbs={[{ label: 'Branchen', href: url.branchen }, { label: 'Gesundheitswesen' }]}
+  eyebrow="Für Ärzte & Heilberufe"
+  title="Steuerberatung für Ärzte, <em>Praxen und Heilberufe.</em>"
+  lead="Von der Praxisgründung bis zur Praxisabgabe: Wir übernehmen Buchhaltung, Lohn, Jahresabschluss und Steuern Ihrer Praxis – digital, persönlich und deutschlandweit."
+  note="Mit Irina Leiblein, Fachberaterin für das Gesundheitswesen (DStV e. V.)"
+  team
+  frame
+  img={{ webp: '/assets/img/branche-gesundheit-frame-800.webp 800w, /assets/img/branche-gesundheit-frame-1200.webp 1200w, /assets/img/branche-gesundheit-frame-1600.webp 1600w', src: '/assets/img/branche-gesundheit-frame-1600.jpg', alt: 'Ärztin arbeitet am Laptop in ihrer Praxis', width: 1600, height: 1067, flip: true }}
+/>
+
+<Vertrauen band={false} />
+
+<!-- Für wen: Kopf links, Zielgruppen rechts auf Linien -->
+<section class="section section--paper">
+  <div class="container aud-wrap">
+    <div class="col-head reveal">
+      <div class="d-head__top"><span class="d-eyebrow">Für wen wir arbeiten</span>
+      <h2 class="d-title">Heilberufe, <br class="br-desk"><em>die&nbsp;wir&nbsp;kennen.</em></h2></div>
+      <p class="lead">Wir betreuen Praxen und Gesundheitsunternehmen ab 100.000&nbsp;€ Jahresumsatz, die ihre Zahlen digital und vorausschauend führen möchten.</p>
+    </div>
+    <ol class="aud reveal">
+      {groups.map((g, i) => <li class="aud__item"><span class="aud__num">{String(i + 1).padStart(2, '0')}</span><h3>{g.title}</h3><p>{g.text}</p></li>)}
+    </ol>
+  </div>
+</section>
+
+<!-- Leistungsumfang für Praxen: dunkle Sektion wie auf den Leistungsseiten (Briefing: „was wir tun“) -->
+<section class="section section--solid">
+  <div class="container split">
+    <div class="split__head reveal"><div class="d-head__top"><span class="d-eyebrow">Leistungsumfang</span><h2 class="d-title">Was wir <em>für Ihre Praxis übernehmen.</em></h2></div><a class="btn btn--primary" href={url.anfrage}>Erstgespräch anfragen <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a></div>
+    <ul class="scope reveal">{scope.map((x) => <li>{x}</li>)}</ul>
+  </div>
+</section>
+
+<!-- Situationen aus dem Praxisalltag (Bildsprache wie Startseite) -->
+<section class="section">
+  <div class="container">
+    <div class="d-head reveal">
+      <div class="d-head__top"><span class="d-eyebrow">Aus dem Praxisalltag</span>
+      <h2 class="d-title d-title--line">Vier Momente, <em>in denen wir an Ihrer Seite sind.</em></h2></div>
+      <p>Von der ersten eigenen Praxis bis zur Übergabe – mit einer Ansprechpartnerin, die Ihre Branche kennt.</p>
+    </div>
+    <div class="sit reveal">
+      {situations.map((s, i) => (
+        <article class="sit-step">
+          <div class="sit-step__mark"><span class="sit-step__dot" aria-hidden="true"></span><b>{String(i + 1).padStart(2, '0')} · {s.tag}</b></div>
+          <div class="sit-step__qa"><div class="sit-step__q"><h3>„{s.q}“</h3></div>
+          <div class="sit-step__a"><ul>{s.a.map((x) => <li>{x}</li>)}</ul><a class="link-arrow sit-step__link" href={s.link.href}><span>{s.linkLabel}</span> <svg class="icon"><use href="#i-arrow"/></svg></a></div></div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Expertin: dunkle Sektion wie „Kanzlei“ auf der Startseite -->
+<section class="section section--solid">
+  <div class="container kanzlei">
+    <div class="reveal">
+      <div class="col-head"><div class="d-head__top"><span class="d-eyebrow">Ihre Ansprechpartnerin</span>
+      <h2 class="d-title">Fachberatung für Heilberufe – <em>mit Brief und Siegel.</em></h2></div>
+      <p class="lead">Irina Leiblein ist Steuerberaterin und Geschäftsführerin von Leiblein + Kollegen. Seit 2014 berät sie Gründerinnen, Gründer und Unternehmen – ihr Schwerpunkt liegt in der steuerrechtlichen Fachberatung bei Heilberufen.</p>
+      <div class="kanzlei-values"><span class="kanzlei-values__h">Qualifikation</span>
+        <div class="kanzlei-values__rows"><p><b>Fachberaterin</b><span>für das Gesundheitswesen (DStV e. V.)</span></p>
+        <p><b>Steuerberaterin</b><span>seit 2014 · Betriebswirtin (FH)</span></p>
+        <p><b>Geschäftsführerin</b><span>Mitgründerin von Leiblein + Kollegen</span></p></div>
+      </div></div>
+      <a class="btn btn--primary" href={url.anfrage}>Erstgespräch anfragen <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="founders-d founders-d--one reveal">
+      <article class="founder-d">
+        <div class="ph ph--light"><img src="/assets/img/real/irina-leiblein-800.webp" srcset="/assets/img/real/irina-leiblein-400.webp 400w, /assets/img/real/irina-leiblein-800.webp 800w" sizes="(min-width: 1024px) 460px, 100vw" width="800" height="800" alt="Irina Leiblein" loading="lazy"></div>
+        <p class="founder-d__name"><b>Irina Leiblein</b><span>Steuerberaterin · Fachberaterin für das Gesundheitswesen (DStV)</span></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<Stimmen />
+
+<Ablauf />
+
+<FaqBlock items={faq} title="Kurz beantwortet, <em>für Ihre Praxis.</em>" />
+
+<Abschluss />
+
+</Base>

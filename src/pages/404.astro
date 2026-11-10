@@ -1,0 +1,28 @@
+---
+// Fehlerseite: wird vom Server für jede nicht vorhandene Adresse ausgeliefert (.htaccess → ErrorDocument 404 /404.html)
+import Base from '../layouts/Base.astro';
+---
+<Base title="Seite nicht gefunden | Leiblein + Kollegen" noindex>
+
+<!-- ====================== 404 ====================== -->
+<section class="section section--paper e404">
+  <div class="container e404__grid">
+    <div class="e404__c">
+      <h1 class="e404__ups">Ups.</h1>
+      <p class="lead">Diese Seite gibt es nicht (mehr). <span class="e404__l2">Vielleicht wurde sie verschoben oder der Link ist veraltet.</span></p>
+      <div class="e404__btns">
+        <a class="btn btn--primary" href="/">Zur Startseite <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--line" href="tel:+49602145670"><svg class="icon"><use href="#i-phone"/></svg> 06021 45670-0</a>
+      </div>
+    </div>
+    <div class="e404__vis" aria-hidden="true">
+      <svg viewBox="0 40 420 290" fill="none">
+        <!-- „404“ in Brix Sans Light, in der Breite gestaucht, so hoch wie der Textblock; nur das rote „+“ bewegt sich -->
+        <text class="e404__num" x="0" y="325.4" textLength="372" lengthAdjust="spacingAndGlyphs">404</text>
+        <path class="e404__plus" d="M400 0 V40 M380 20 H420" stroke="#e65f5a" stroke-width="6"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+</Base>

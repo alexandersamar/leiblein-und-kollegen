@@ -1,0 +1,19 @@
+---
+// Beitragskarte im Stil der Startseite: Themen-Tag (rot umrandet), Titel, Datum, „Weiterlesen“ mit Linie.
+// feature = großer erster Beitrag (quer) mit Kurztext.
+import { formatDate, type Post } from '../../data/postsUtil';
+interface Props { p: Post; feature?: boolean }
+const { p, feature = false } = Astro.props;
+---
+<a class={`pcard${feature ? ' pcard--feature' : ''}`} href={`/wissen/${p.slug}/`} data-cat={p.category}>
+  <span class={`pcard__img${p.image ? '' : ' pcard__img--empty'}`}>{p.image
+    ? <picture><source type="image/webp" srcset={`/assets/img/${p.image}-800.webp 800w, /assets/img/${p.image}-1200.webp 1200w, /assets/img/${p.image}-1600.webp 1600w`} sizes={feature ? '(min-width: 1024px) 700px, 100vw' : '(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw'}><img src={`/assets/img/${p.image}-800.jpg`} alt="" width="800" height="533" loading={feature ? 'eager' : 'lazy'} decoding="async"></picture>
+    : null}</span>
+  <span class="pcard__txt">
+    <span class="post__cat">{p.category}</span>
+    <span class="pcard__title">{p.title}</span>
+    {p.date && <small class="post__date">{formatDate(p.date)}{feature && ` · ${p.readingMinutes} Min. Lesezeit`}</small>}
+    {feature && <span class="pcard__ex">{p.excerpt}</span>}
+    <span class="link-arrow"><span>Weiterlesen</span> <svg class="icon"><use href="#i-arrow"/></svg></span>
+  </span>
+</a>

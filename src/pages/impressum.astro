@@ -1,0 +1,78 @@
+---
+// Impressum – Angaben nach § 5 DDG und berufsrechtliche Pflichtangaben für Steuerberater
+import Base from '../layouts/Base.astro';
+import LegalHead from '../components/legal/LegalHead.astro';
+import { firm } from '../data/site';
+---
+<Base title="Impressum | Leiblein + Kollegen" description="Impressum der Leiblein & Kollegen Steuerberatungsgesellschaft mbH, Aschaffenburg: Anbieterkennzeichnung, berufsrechtliche Angaben, Berufshaftpflicht und rechtliche Hinweise.">
+
+<!-- ====================== Impressum ====================== -->
+<section class="section section--paper legal">
+  <div class="container">
+    <LegalHead title="Impressum" lead="Angaben nach § 5 Digitale-Dienste-Gesetz (DDG) und berufsrechtliche Pflichtangaben für Steuerberater." />
+
+    <div class="legal-body">
+    <div class="legal-grid reveal">
+      <div class="legal-card legal-card--fresh">
+        <h2 class="legal-card__h">Anbieter</h2>
+        <p><b>{firm.name}</b><br>{firm.street}<br>{firm.zip} {firm.city}</p>
+        <p class="legal-ci">
+          <a href={firm.phoneHref}><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>{firm.phone}</a>
+          <a href={`mailto:${firm.email}`}><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>{firm.email}</a>
+        </p>
+        <dl class="legal-dl">
+          <div><dt>Geschäftsführer</dt><dd>Dipl.-BW (FH) Eberhard Leiblein, Steuerberater<br>Dipl.-BWin (FH) Irina Leiblein, Steuerberaterin</dd></div>
+          <div><dt>Sitz</dt><dd>Aschaffenburg</dd></div>
+          <div><dt>Handelsregister</dt><dd>HRB 14408</dd></div>
+          <div><dt>Umsatzsteuer-ID</dt><dd>DE 31 42 06 422</dd></div>
+        </dl>
+      </div>
+
+      <div class="legal-card">
+        <h2 class="legal-card__h">Berufsrechtliche Angaben</h2>
+        <dl class="legal-dl">
+          <div><dt>Berufsbezeichnung</dt><dd>Steuerberater / Steuerberaterin, verliehen in der Bundesrepublik Deutschland (Bundesland: Bayern)</dd></div>
+          <div><dt>Zuständige Kammer</dt><dd>Steuerberaterkammer Nürnberg<br>Karolinenstraße 28, 90402 Nürnberg<br><a href="https://www.stbk-nuernberg.de" target="_blank" rel="noopener">www.stbk-nuernberg.de</a></dd></div>
+        </dl>
+        <p>Der Berufsstand der Steuerberater unterliegt im Wesentlichen den folgenden gesetzlichen Regelungen:</p>
+        <ol class="legal-num">
+          <li>Steuerberatungsgesetz (StBerG)</li>
+          <li>Durchführungsverordnung zum Steuerberatungsgesetz (DVStB)</li>
+          <li>Berufsordnung (BOStB)</li>
+          <li>Steuerberatervergütungsverordnung (StBVV)</li>
+        </ol>
+        <p>Informationen zu diesen Vorschriften finden Sie bei der Bundessteuerberaterkammer: <a href="https://www.bstbk.de/de/themen/berufsrecht" target="_blank" rel="noopener">www.bstbk.de</a></p>
+        <p class="legal-note"><b>Hinweis nach § 4 Abs. 4 StBVV</b>Eine höhere oder niedrigere als die gesetzliche Vergütung kann in Textform vereinbart werden.</p>
+      </div>
+    </div>
+
+    <div class="legal-card legal-more reveal">
+      <section>
+        <h2 class="legal-card__h">Berufshaftpflicht&shy;versicherung</h2>
+        <p>Eine Berufshaftpflichtversicherung wurde für die Leiblein Steuerberatungsgesellschaft mbH sowie die Leiblein &amp; Kollegen Steuerberatungsgesellschaft mbH abgeschlossen bei: HDI-Gerling Firmen und Privat-Versicherung AG, Riethorst 2, 30659 Hannover.</p>
+        <p><a href="/assets/docs/berufshaftpflicht-geltungsbereich.pdf" target="_blank" rel="noopener">Räumlicher Geltungsbereich (PDF)</a></p>
+      </section>
+      <section>
+        <h2 class="legal-card__h">Auftragsbedingungen und Gerichtsstand</h2>
+        <p>Soweit nichts anderes vereinbart, gelten die Allgemeinen Auftragsbedingungen für Steuerberater, Steuerbevollmächtigte und Steuerberatungsgesellschaften vom November 2016.</p>
+        <p>Zuständiger Gerichtsstand: Landgericht Aschaffenburg, Erthalstraße 3, 63769 Aschaffenburg</p>
+      </section>
+      <section>
+        <h2 class="legal-card__h">Verbraucher&shy;streitbeilegung</h2>
+        <p>Es besteht keine Verpflichtung und keine Bereitschaft zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle.</p>
+      </section>
+      <section>
+        <h2 class="legal-card__h">Rechtliche Hinweise</h2>
+        <p>Alle in unseren Internetseiten enthaltenen Informationen sind ein Service der Leiblein Steuerberatungsgesellschaft mbH. Trotz sorgfältiger Beschaffung und Bereitstellung der Informationen übernehmen wir keine Haftung für die Richtigkeit, Vollständigkeit und Aktualität der im Rahmen des Informationsservices zum Abruf bereitgehaltenen und angezeigten Inhalte.</p>
+        <p>Die zum Abruf bereitgehaltenen und angezeigten Inhalte dienen ausschließlich der Information der Besucher und stellen insbesondere keine juristische und/oder einzelfallbezogene Beratung oder Empfehlung dar. Für Internetseiten Dritter, auf die diese Webseite verweisen, tragen allein die jeweiligen Anbieter die Verantwortung. Wir übernehmen insoweit keine Haftung zivil- wie strafrechtlicher Art. Im Übrigen wird die Haftung auf Vorsatz oder grobe Fahrlässigkeit beschränkt.</p>
+      </section>
+      <section>
+        <h2 class="legal-card__h">Urheberrecht</h2>
+        <p>Der Inhalt dieser Homepage ist urheberrechtlich geschützt. Jede Verwertung, soweit sie nicht bereits durch das geltende Urheberrecht zulässig ist, bedarf der vorherigen schriftlichen Zustimmung des o.&nbsp;g. Verantwortlichen. Verknüpfungen auf unser Internetangebot sind ohne unsere Zustimmung nur auf die Hauptseite zulässig. Wir behalten uns vor, im Einzelfall auch einer Verlinkung auf die Hauptseite ohne Begründung zu widersprechen.</p>
+      </section>
+    </div>
+    </div>
+  </div>
+</section>
+
+</Base>

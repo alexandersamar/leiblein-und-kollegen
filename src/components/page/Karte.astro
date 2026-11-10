@@ -1,0 +1,36 @@
+---
+// Interaktive Karte (MapLibre + OpenFreeMap, ohne API-Schlüssel, ohne Google) – Aufbau wie bei Ahlhoff:
+// Bis zur Einwilligung steht ein statisches Kartenbild mit Pin und eine Karte „Externe Inhalte erlauben“ darüber.
+// Freigabe: „Alle akzeptieren“ bzw. „Externe Inhalte“ im Cookie-Hinweis oder der Schalter auf der Karte.
+// Bibliothek und Kacheln laden erst, wenn die Karte in Sichtnähe kommt UND freigegeben ist.
+import { firm, url } from '../../data/site';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+// Versionsnummer aus dem Dateiinhalt (wie main.js): nach jeder Änderung lädt der Browser die neue Datei
+const jsV = createHash('md5').update(readFileSync(join(process.cwd(), 'public', 'assets', 'karte.js'))).digest('hex').slice(0, 8);
+const route = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${firm.street}, ${firm.zip} ${firm.city}`)}`;
+const label = `${firm.street}, ${firm.zip} ${firm.city}`;
+---
+<div class="karte" data-karte data-lng="9.145929" data-lat="49.9792566" data-title={`Leiblein + Kollegen, ${firm.street}`}>
+  <div class="karte__map" role="region" aria-label={`Karte: ${label}`}><div class="karte__gl"></div></div><!-- innere Box: maplibre-gl.css setzt „position: relative“ auf den Container -->
+  <div class="karte__ph" aria-hidden="true">
+    <img class="karte__static" src="/assets/img/karte-800.webp" srcset="/assets/img/karte-800.webp 800w, /assets/img/karte-1400.webp 1400w" sizes="(min-width: 1024px) 60vw, 100vw" alt="" width="1400" height="934" loading="lazy">
+    <img class="karte__pin" src="/assets/icons/map-pin.svg" alt="" width="50" height="60">
+    <span class="karte__msg" role="status"></span>
+    <span class="karte__osm">© OpenStreetMap-Mitwirkende · OpenFreeMap</span>
+  </div>
+  <div class="karte__consent" hidden>
+    <div class="karte__card">
+      <div class="karte__row">
+        <img src="/assets/icons/cookie.svg" alt="" width="30" height="30">
+        <label for="karte-ok">Externe Inhalte erlauben</label>
+        <button id="karte-ok" class="karte__sw" type="button" role="switch" aria-checked="false"><span></span></button>
+      </div>
+      <p>Beim Laden der Karte wird Ihre IP-Adresse an OpenFreeMap übertragen. Mehr dazu in der <a href={url.datenschutz}>Datenschutzerklärung</a>.</p>
+    </div>
+  </div>
+  <a class="btn btn--primary btn--sm karte__route" href={route} target="_blank" rel="noopener noreferrer" aria-label="Route planen (Google Maps, öffnet in neuem Tab)">Route planen <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a>
+</div>
+
+<script is:inline src={`/assets/karte.js?v=${jsV}`} defer></script>

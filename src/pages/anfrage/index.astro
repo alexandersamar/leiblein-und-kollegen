@@ -1,0 +1,66 @@
+---
+// Erstgespräch anfragen: mehrstufiges Qualifizierungs-Formular (Logik in main.js, Optionen in data/anfrage.ts).
+// Versand (E-Mail/CRM) wird beim Livegang angebunden; bis dahin führt „Absenden“ zur Danke-Seite.
+import Base from '../../layouts/Base.astro';
+import CrumbBar from '../../components/page/CrumbBar.astro';
+import Select from '../../components/Select.astro';
+import FormError from '../../components/FormError.astro';
+import { steps, contactTimes } from '../../data/anfrage';
+import { url, firm } from '../../data/site';
+const total = steps.length + 1;
+---
+<Base title="Erstgespräch anfragen | Leiblein + Kollegen" description="In zwei Minuten zum Erstgespräch: Beantworten Sie ein paar kurze Fragen – wir melden uns und besprechen mit Ihnen, wie wir Ihr Unternehmen unterstützen können.">
+
+<!-- Kopf und Formular in einem Block: links Einordnung, rechts das Formular (über dem Falz) -->
+<section class="section section--paper pg-hero has-crumbs">
+  <CrumbBar items={[{ label: 'Erstgespräch anfragen' }]} />
+  <div class="container split anf anf--form">
+    <div class="split__head">
+      <div class="d-head__top"><span class="d-eyebrow">Unverbindlich &amp; digital</span>
+      <h1 class="d-title">In zwei Minuten <em>zum Erstgespräch.</em></h1></div>
+      <p class="lead">Beantworten Sie ein paar kurze Fragen. So wissen wir vorab, ob wir zu Ihrem Unternehmen passen – und können das Gespräch gezielt vorbereiten.</p>
+    </div>
+    <form class="qf reveal" data-qf data-ok={url.anfrageDanke} data-no="/anfrage/leider-nicht/" novalidate>
+      <div class="qf__bar"><span data-qf-count>Schritt 1 von {total}</span><div class="qf__track"><i data-qf-progress></i></div></div>
+      {steps.map((s, i) => (
+        <fieldset class="qf__step" data-step={i} hidden={i > 0}>
+          <legend>{s.question}{s.hint && <span class="qf__hint">{s.hint}</span>}</legend>
+          <div class="qf__opts">
+            {s.options.map((o) => <label class="qf__opt"><input type="radio" name={s.name} value={o.value} data-reject={o.reject ? '' : undefined} required={!s.optional}>{o.label}</label>)}
+          </div>
+        </fieldset>
+      ))}
+      <fieldset class="qf__step" data-step={steps.length} hidden>
+        <legend>Wie erreichen wir Sie?</legend>
+        <div class="form">
+          <div class="field"><label for="qf-name">Name *</label><input id="qf-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="qf-firma">Unternehmen *</label><input id="qf-firma" name="firma" autocomplete="organization" required></div>
+          <div class="field"><label for="qf-mail">E-Mail *</label><input id="qf-mail" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="qf-tel">Telefon *</label><input id="qf-tel" name="telefon" type="tel" autocomplete="tel" required></div>
+          <Select class="full" id="qf-zeit" name="erreichbar" label="Wann sind Sie am besten erreichbar?" options={contactTimes} />
+          <!-- Spamschutz (Honeypot): für Menschen unsichtbar, Bots füllen es aus → Anfrage wird verworfen -->
+          <div class="hp" aria-hidden="true"><label for="qf-web">Website</label><input id="qf-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+          <label class="consent full"><input type="checkbox" name="datenschutz" required><span>Ich habe die <a href={url.datenschutz}>Datenschutzerklärung</a> gelesen und bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage gespeichert werden. *</span></label>
+        </div>
+      </fieldset>
+      <FormError />
+      <div class="qf__nav">
+        <button type="button" class="link-arrow art__back qf__back" data-qf-back hidden><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg> <span>Zurück</span></button>
+        <button type="submit" class="btn btn--primary" data-qf-next>Weiter <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></button>
+      </div>
+      <hr class="qf__sep">
+      <p class="form__note">* Pflichtfeld. Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet.</p>
+    </form>
+    <!-- Nächste Schritte: am Desktop unter dem Kopf, am Telefon unter dem Formular (Formular zuerst) -->
+    <div class="anf__more">
+      <ol class="anf__steps">
+        <li><b>Rückruf</b><span>Unser Sekretariat meldet sich und klärt die wichtigsten Eckdaten.</span></li>
+        <li><b>Erstgespräch</b><span>Ein Partner bespricht mit Ihnen Situation und Ziele – per Video oder in Aschaffenburg.</span></li>
+        <li><b>Start</b><span>Passt es, starten Sie über das DATEV-Online-Onboarding.</span></li>
+      </ol>
+      <div class="anf__tel anf__tel--big"><span class="anf__tel-lbl">Lieber direkt sprechen?</span><a href={firm.phoneHref}>{firm.phone}</a><span>Mo – Do 08:00 – 17:00 · Fr 08:00 – 14:00</span></div>
+    </div>
+  </div>
+</section>
+
+</Base>

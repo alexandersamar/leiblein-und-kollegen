@@ -1,0 +1,10 @@
+---
+// Sektionskopf: Überzeile, Überschrift (HTML, <em> = rot), optional Einleitung; start = linksbündig
+interface Props { eyebrow: string; title: string; lead?: string; start?: boolean; tag?: string }
+const { eyebrow, title, lead, start = false } = Astro.props;
+---
+<div class={`d-head${start ? ' d-head--start' : ''} reveal`}>
+  <div class="d-head__top"><span class="d-eyebrow">{eyebrow}</span>
+  <h2 class="d-title" set:html={title} /></div>
+  {lead && <p>{lead}</p>}
+</div>

@@ -1,0 +1,18 @@
+---
+// Rechtstext mit Inhaltsverzeichnis: links mitlaufende Übersicht, rechts der Text in einer Karte
+interface Props { sections: { id: string; title: string }[]; updated?: string }
+const { sections, updated } = Astro.props;
+const nr = (i: number) => String(i + 1).padStart(2, '0');
+---
+<div class="legal-doc">
+  <nav class="legal-toc" aria-label="Inhaltsübersicht">
+    <span class="legal-toc__h">Inhalt</span>
+    <ol>
+      {sections.map((s, i) => <li><a href={`#${s.id}`}><span>{nr(i)}</span>{s.title}</a></li>)}
+    </ol>
+  </nav>
+  <article class="legal-card legal-text">
+    <slot />
+    {updated && <p class="legal-updated">{updated}</p>}
+  </article>
+</div>

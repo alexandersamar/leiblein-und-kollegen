@@ -1,0 +1,28 @@
+---
+// Wissen-Teaser der Startseite: Themen und Beiträge aus denselben Daten wie die Wissen-Seiten (Links führen immer auf existierende Themen)
+import { allPosts, categories, formatDate, listUrl } from '../../data/postsUtil';
+// drei neueste Beiträge mit Bild
+const posts = allPosts.filter((p) => p.image).slice(0, 3);
+---
+<!-- ====================== 11 · Wissen (Blog-Teaser) ====================== -->
+<section class="section section--light" id="wissen">
+  <div class="container">
+    <div class="wissen">
+      <div class="wissen__l reveal">
+        <div class="col-head"><div class="d-head__top"><span class="d-eyebrow">Wissen</span>
+        <h2 class="d-title">Steuerwissen <br><em>für Unternehmer.</em></h2></div>
+        <p class="lead">Fachbeiträge und Mandanteninformationen seit 2010</p></div>
+        <div class="wissen__topics"><span class="wissen__eye">Beliebte Themen</span><div>{categories.map((c) => <a href={listUrl(c, 1)}>{c}</a>)}</div></div>
+        <a class="btn btn--primary" href="/wissen/">Alle Beiträge <svg class="icon icon--arrow"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="posts reveal">
+      {posts.map((p) => (
+      <a class="post" href={`/wissen/${p.slug}/`}>
+        <picture><source type="image/webp" srcset={`/assets/img/${p.image}-800.webp 800w, /assets/img/${p.image}-1200.webp 1200w, /assets/img/${p.image}-1600.webp 1600w`} sizes="(min-width: 1024px) 520px, 85vw"><img src={`/assets/img/${p.image}-800.jpg`} alt="" width="800" height="533" loading="lazy" decoding="async"></picture>
+        <div class="post__txt"><span class="post__cat">{p.category}</span><h3>{p.title}</h3>{p.date && <small class="post__date">{formatDate(p.date)}</small>}<span class="link-arrow"><span>Weiterlesen</span> <svg class="icon"><use href="#i-arrow"/></svg></span></div>
+      </a>
+      ))}
+      </div>
+    </div>
+  </div>
+</section>

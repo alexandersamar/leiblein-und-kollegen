@@ -1,0 +1,6 @@
+---
+// Fehlermeldung für Formulare (Anfrage, Kontakt): rotes Quadrat mit „!“ (SVG, auch assets/icons/alert.svg) + Text. Text setzt main.js (formCheck).
+interface Props { class?: string; text?: string }
+const { class: cls = '', text = '' } = Astro.props;
+---
+<p class={`form-err ${cls}`} data-form-err hidden role="alert"><i aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="M10 4.75v6.5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/><circle cx="10" cy="15" r="1.25" fill="currentColor"/></svg></i><span data-form-err-txt>{text}</span></p>

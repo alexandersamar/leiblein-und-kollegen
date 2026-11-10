@@ -1,0 +1,24 @@
+---
+import { url } from '../data/site';
+---
+<!-- Cookie-Hinweis (DSGVO/TDDDG): keine Tracker vor Einwilligung; „Cookie-Einstellungen“ im Footer öffnet ihn erneut -->
+<div class="cookie" role="dialog" aria-modal="false" aria-labelledby="cookie-t" hidden>
+  <div class="cookie__box">
+    <span class="cookie__ic" aria-hidden="true"><svg width="36" height="36" viewBox="0 0 32 32" fill="none"><defs><mask id="cookie-bite"><rect width="32" height="32" fill="#fff"/><circle cx="27" cy="5" r="6.5"/><circle cx="21" cy="2" r="3.5"/><circle cx="30.5" cy="11" r="3.5"/></mask></defs><g mask="url(#cookie-bite)"><circle cx="16" cy="16" r="13.5" fill="#96d2e1" fill-opacity=".35" stroke="#231e3c" stroke-width="1.5"/><g fill="#e65f5a"><circle cx="11" cy="12" r="2"/><circle cx="18" cy="19" r="2.2"/><circle cx="10.5" cy="21" r="1.6"/><circle cx="20" cy="10.5" r="1.4"/><circle cx="23.5" cy="17" r="1.3"/></g></g></svg><i style="--dx:-10px;animation-delay:1.00s"></i><i style="--dx:-3px;animation-delay:1.18s"></i><i style="--dx:4px;animation-delay:1.36s"></i><i style="--dx:10px;animation-delay:1.54s"></i><i style="--dx:-6px;animation-delay:1.72s"></i><i style="--dx:7px;animation-delay:1.90s"></i></span>
+    <div class="cookie__b">
+      <p><b id="cookie-t">Cookies &amp; Datenschutz</b>Wir verwenden Cookies, um unsere Website zu verbessern. Details in der <a href={url.datenschutz}>Datenschutzerklärung</a>.</p>
+      <div class="cookie__set" hidden>
+        <label class="cookie__opt"><input type="checkbox" checked disabled><span><b>Notwendig</b>Für den Betrieb der Website erforderlich.</span></label>
+        <label class="cookie__opt"><input type="checkbox" name="stat"><span><b>Statistik</b>Hilft uns zu verstehen, wie die Website genutzt wird.</span></label>
+        <label class="cookie__opt"><input type="checkbox" name="ext"><span><b>Externe Inhalte</b>Karte auf der Kontaktseite (OpenStreetMap über OpenFreeMap).</span></label>
+        <label class="cookie__opt"><input type="checkbox" name="mkt"><span><b>Marketing</b>Für Werbung und Erfolgsmessung, z.&nbsp;B. Google oder Meta.</span></label>
+      </div>
+      <div class="cookie__a">
+        <button type="button" class="btn btn--primary" data-consent="all">Alle akzeptieren</button>
+        <button type="button" class="btn btn--line" data-consent="necessary">Nur notwendige</button>
+      </div>
+      <button type="button" class="cookie__link" data-consent="settings">Einstellungen</button>
+      <button type="button" class="cookie__link" data-consent="save" hidden>Auswahl speichern</button>
+    </div>
+  </div>
+</div>

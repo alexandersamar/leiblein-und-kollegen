@@ -1,0 +1,17 @@
+---
+import { firm, url } from '../data/site';
+---
+<!-- ====================== Info-Leiste ====================== -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar__group">
+      <span class="topbar__label">Für Neumandanten:</span>
+      <a class="topbar__item" href={firm.phoneHref}><svg class="icon"><use href="#i-phone"/></svg>{firm.phone}</a>
+      <a class="topbar__item" href={`mailto:${firm.email}`}><svg class="icon"><use href="#i-mail"/></svg>{firm.email}</a>
+      <span class="topbar__item topbar__group--secondary"><svg class="icon"><use href="#i-pin"/></svg>{firm.street}, {firm.city}</span>
+    </div>
+    <div class="topbar__group topbar__group--secondary">
+      <span class="hiring"><span class="hiring__tag"><span class="hiring__dot" aria-hidden="true"></span>Leiblein + Du</span><a class="hiring__link" href={url.karriere}>Werde Teil unseres Teams<svg class="icon"><use href="#i-arrow"/></svg></a></span>
+    </div>
+  </div>
+</div>
