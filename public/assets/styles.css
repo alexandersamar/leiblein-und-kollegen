@@ -1916,9 +1916,8 @@ body.menu-open .rail { opacity: 0; visibility: hidden; }
 @media (max-width: 767px) {
   .footer__bottom { grid-template-columns: minmax(0, 1fr); grid-template-areas: "dig" "nav" "copy"; }
 }
-/* sehr schmale Handys (≤400): Team-Zeile untereinander, Mobil-Leiste ohne Überlauf */
+/* sehr schmale Handys (≤400): Mobil-Leiste ohne Überlauf */
 @media (max-width: 400px) {
-  .team-row { flex-direction: column; align-items: flex-start; }
   .mobile-cta .btn:not([aria-label]) { min-width: 0; padding: 0 var(--sp-10); font-size: 14px; }
 }
 /* Header über dunklen Sektionen: deckend weiß statt Glas */
@@ -1965,7 +1964,8 @@ body.menu-open .rail { opacity: 0; visibility: hidden; }
   .team-row { align-self: stretch; justify-content: center; }
   .kanzlei .btn { align-self: stretch; width: 100%; }
 }
-@media (max-width: 400px) { .team-row { align-items: center; text-align: center; } }
+/* Handys (≤767): Gesichter über dem Text, alles mittig */
+@media (max-width: 767px) { .team-row { flex-direction: column; align-items: center; text-align: center; } }
 /* Wissen einspaltig (≤1023): Überschrift, Themen, Beiträge, darunter Button vollbreit */
 @media (max-width: 1023px) {
   .wissen__l { display: contents; }
@@ -2340,9 +2340,9 @@ main .sr-host.sr-in .col-head :is(> .lead, .d-head__top > .d-eyebrow, > .d-eyebr
   .pg-hero .team-row__faces img:nth-child(4) { animation-delay: .93s; } .pg-hero .team-row__faces img:nth-child(5) { animation-delay: .99s; } .pg-hero .team-row__faces img:nth-child(6) { animation-delay: 1.05s; }
 }
 @keyframes e-pop { from { opacity: 0; scale: .82; } to { opacity: 1; scale: 1; } }
-/* Text neben den Gesichtern immer linksbündig; nur wenn untereinander (≤400) mittig */
+/* Text neben den Gesichtern immer linksbündig; nur wenn untereinander (≤767) mittig */
 .team-row--light p { text-align: left; }
-@media (max-width: 400px) { .team-row--light p { text-align: center; } }
+@media (max-width: 767px) { .team-row--light p { text-align: center; } }
 /* Glühen reagiert auf Hover des Haupt-Buttons wie auf der Startseite */
 .pg-hero--frame::before { transition: --glow .6s cubic-bezier(.22,1,.36,1); }
 .pg-hero--frame:has(.btn--primary:hover)::before, .pg-hero--frame:has(.btn--primary:focus-visible)::before { --glow: color-mix(in srgb, var(--fresh) 55%, transparent); }

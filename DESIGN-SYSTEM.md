@@ -164,7 +164,7 @@ Wie Startseite: Überzeile sofort (`e-up`), Titel zeilenweise per Skript; Untert
 
 `PageHero` mit `frame` + `note` + `team`, danach `<Vertrauen band={false} />`:
 - Text | Foto: ab 1280 50/50, 1024–1279 7:5 (Buttons in einer Zeile), ≤1023 untereinander, Text mittig.
-- Unter der Einleitung (max. 540) die rote Linie (`note`) mit der Zielgruppe, danach Buttons, danach Team-Zeile (`.team-row--light`: Avatare + „Rund 20 Fachkräfte · über 20 Jahre Erfahrung · 100 % digital“, wie Kanzlei-Block der Startseite).
+- Unter der Einleitung (max. 540) die rote Linie (`note`) mit der Zielgruppe, danach Buttons, danach Team-Zeile (`.team-row--light`: Avatare + „Rund 20 Fachkräfte · über 20 Jahre Erfahrung · 100 % digital“, wie Kanzlei-Block der Startseite). Auf Handys (≤767) stehen die Avatare über dem Text, beides mittig.
 - Foto bleibt in der Spalte (Inhaltskante), abgeschrägte Ecke 30, ab 1024 so hoch wie der Text, mindestens 420 (`--ph-min`); blendet ein und setzt sich aus leichtem Zoom; dahinter oben links „+“-Raster, links unten rotes Glühen wie Startseite. ≤1023: Foto 3:2 unter dem Text, mit Ecke.
 - Abstände wie Startseite: Kopf + Einleitung (`.pg-hero__intro`, 20) → Hinweis → Buttons → Team je 30; unten normaler Sektionsabstand, danach Vertrauensleiste.
 
